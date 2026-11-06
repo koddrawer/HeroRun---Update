@@ -63,6 +63,9 @@ DEFAULTS = {
 
     # ---- âm thanh / giao diện ----
     "music_volume": 0.35,
+    "music_source": "auto",         # auto | folder | builtin | classic | off
+    "music_folder": "music",        # thư mục nhạc của bạn (tương đối thư mục app hoặc đường dẫn đầy đủ)
+    "music_shuffle": True,
     "sfx_volume": 0.7,
     "show_guide": True,
     "show_hud": True,

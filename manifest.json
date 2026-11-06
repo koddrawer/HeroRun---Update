@@ -1,6 +1,6 @@
 {
- "version": "1.1.2",
- "notes": "Thêm bảng TOP 3 sắp đủ tim + người dẫn nhắc",
+ "version": "1.1.3",
+ "notes": "Bảng TOP 3 luôn hiện; thêm nhạc nền mới + phát nhạc của bạn từ thư mục music",
  "files": [
   {
    "path": "README.md",
@@ -29,8 +29,23 @@
   },
   {
    "path": "version.json",
-   "sha256": "47bcbf6d5d47c2c9e89467a19cae51545d9e726c7ac2db03e3072606172063df",
-   "size": 91
+   "sha256": "a168e1e6378e5f9181cf98e066b53a3bb13ceb77a38b3ae40b95526be0b5b73a",
+   "size": 133
+  },
+  {
+   "path": "assets/music/track1_adventure.ogg",
+   "sha256": "14faeccd4da65e7985cb556bb5c68636a66bf92da1d8dfc7514773e80d2f39b9",
+   "size": 755395
+  },
+  {
+   "path": "assets/music/track2_heroic.ogg",
+   "sha256": "07304934207fa746719b644e1aa09d03313d81fbfe0c67a87dde013fcb5b47ae",
+   "size": 793118
+  },
+  {
+   "path": "assets/music/track3_sky.ogg",
+   "sha256": "3add544520ffd30a2d693750914fdbba58284b6afce75a3ed07da54dbaec2d98",
+   "size": 912204
   },
   {
    "path": "assets/fonts/bold.ttf",
@@ -1334,8 +1349,8 @@
   },
   {
    "path": "app/defaults.py",
-   "sha256": "87b8cf717b17c1d0b9a21ce69f7cb419e7d59523bd2481574dfdbaa23ff542e8",
-   "size": 3568
+   "sha256": "310be1da2a0635e2da26fa383d06ad457a6d00c4a27dc75313334dc04b683372",
+   "size": 3809
   },
   {
    "path": "app/fx.py",
@@ -1344,8 +1359,8 @@
   },
   {
    "path": "app/game.py",
-   "sha256": "b2f530c75c443836653e4df39c3dac98cf83db6034c13a9722e9fbc759b94bd0",
-   "size": 66365
+   "sha256": "f530d62691ba10e8fb945a0e47123afa2ad51eb902ad7b16eb0c5120ed5cfa5d",
+   "size": 66902
   },
   {
    "path": "app/ipc.py",
@@ -1353,9 +1368,14 @@
    "size": 3108
   },
   {
+   "path": "app/music.py",
+   "sha256": "4f2c719e2515644ee9054edaad98b6a16aff84facf88a7844ab7e673264b98dd",
+   "size": 2988
+  },
+  {
    "path": "app/panel.py",
-   "sha256": "330bf30448982b3897b96e4491eb068c7e2345cb586ed550f770f0a790701afa",
-   "size": 21871
+   "sha256": "e4dc66c509527eadb79c7bce117bce233c7e283b8f4cd1f69b862d26bb86af64",
+   "size": 23229
   },
   {
    "path": "app/tiktok_client.py",
@@ -1371,6 +1391,11 @@
    "path": "app/voice.py",
    "sha256": "39a6176e8d2a52433c6fefe31806a3ee3749ab76b048bcd912dc85f46d03d577",
    "size": 9801
+  },
+  {
+   "path": "music/HUONG_DAN.txt",
+   "sha256": "699ff9046fa262a2db2224d714778d9e2ca8d938bc7e7fa00cae883d94afbc2c",
+   "size": 171
   }
  ]
 }

@@ -1,0 +1,2 @@
+Bỏ file nhạc (.mp3 .ogg .wav .flac) vào thư mục này.
+Chế độ "auto": có bài ở đây thì phát bài của bạn, không thì phát 3 bài dựng sẵn.

@@ -78,6 +78,9 @@ SPEC = {
         ('show_guide', 'Hiện bảng hướng dẫn', 'bool', None),
         ('show_hearts', 'Hiện tim bay', 'bool', None),
         ('music_volume', 'Âm lượng nhạc', 'float', (0, 1)),
+        ('music_source', 'Nguồn nhạc nền', 'choice', ['auto', 'folder', 'builtin', 'classic', 'off']),
+        ('music_folder', 'Thư mục nhạc của bạn', 'folder', None),
+        ('music_shuffle', 'Phát ngẫu nhiên', 'bool', None),
         ('sfx_volume', 'Âm lượng hiệu ứng', 'float', (0, 1)),
     ],
 }
@@ -85,7 +88,8 @@ SPEC = {
 from .voice import TURBO_VOICES, NANO_VOICES
 VOICE_LIST = TURBO_VOICES + [v for v in NANO_VOICES if v not in TURBO_VOICES]
 
-GUIDE = {'tts_mode': 'v3turbo hay hơn; v3nano nhẹ cho máy yếu (giọng riêng: Minh Quân, Ái Hân, Hữu Quân...)',
+GUIDE = {'music_source': 'auto = thư mục của bạn nếu có bài, không thì 3 bài dựng sẵn; folder = chỉ thư mục của bạn;\nbuiltin = 3 bài dựng sẵn; classic = nhạc cũ của game; off = tắt',
+         'music_folder': 'Bỏ file mp3/ogg/wav/flac vào đây (mặc định thư mục music\\ cạnh app)','tts_mode': 'v3turbo hay hơn; v3nano nhẹ cho máy yếu (giọng riêng: Minh Quân, Ái Hân, Hữu Quân...)',
          'tts_precision': 'int8 nhanh ~1.6x nhưng CPU phải hỗ trợ VNNI, nếu méo tiếng thì để fp32',
          'tts_threads': 'Lần đầu chạy sẽ tải model từ HuggingFace; câu đã đọc được lưu ở voice_cache\\','buff_mode': 'auto = ưu tiên thứ Hero cần; random; cycle = lần lượt',
          'gift_rule': 'unit = theo giá 1 món (5 hoa hồng = 5 robot); total = theo tổng xu'}
@@ -167,7 +171,7 @@ class Panel:
         keys = [('fps', 'FPS'), ('hp', 'Máu Hero'), ('dist', 'Quãng đường (m)'), ('kills', 'Quái đã diệt'),
                 ('deaths', 'Số lần gục'), ('guests', 'Quái khách'), ('monsters', 'Quái trên màn'),
                 ('likes', 'Tổng tim'), ('coins', 'Tổng xu'), ('buff_q', 'Buff đang chờ'), ('helper_q', 'Trợ thủ đang chờ'),
-                ('voice', 'Giọng nói')]
+                ('voice', 'Giọng nói'), ('music', 'Đang phát')]
         for i, (k, lbl) in enumerate(keys):
             ttk.Label(sf, text=lbl, style='S.TLabel').grid(row=i // 2, column=(i % 2) * 2, sticky='w', padx=6, pady=1)
             l = ttk.Label(sf, text='—'); l.grid(row=i // 2, column=(i % 2) * 2 + 1, sticky='w', padx=6)
@@ -176,6 +180,7 @@ class Panel:
 
         tf = ttk.LabelFrame(f, text='Thử nghiệm (không cần LIVE)'); tf.pack(fill='x', padx=8, pady=6)
         tests = [('+ Khách vào', {'kind': 'guest'}), ('+100 tim', {'kind': 'like', 'value': 100}),
+                 ('+15 tim', {'kind': 'like', 'value': 15}), ('+40 tim', {'kind': 'like', 'value': 40}),
                  ('Buff DAME', {'kind': 'buff', 'value': 'damage'}), ('Buff MÁU', {'kind': 'buff', 'value': 'heal'}),
                  ('Buff GIÁP', {'kind': 'buff', 'value': 'armor'}), ('Tặng 1 xu', {'kind': 'gift', 'value': 1}),
                  ('Tặng 5 xu', {'kind': 'gift', 'value': 5}), ('Thêm quái', {'kind': 'monster'}),
@@ -190,8 +195,9 @@ class Panel:
         ttk.Button(gf, text='Chơi lại', command=lambda: self.ipc.send({'cmd': 'reset'})).pack(side='left', padx=3)
         ttk.Button(gf, text='Xoá quái khách', command=lambda: self.ipc.send({'cmd': 'clear_guests'})).pack(side='left', padx=3)
         ttk.Button(gf, text='Mở lại cửa sổ game', command=self.restart_game).pack(side='left', padx=3)
+        ttk.Button(gf, text='Bài nhạc tiếp', command=lambda: self.ipc.send({'cmd': 'music_next'})).pack(side='left', padx=3)
         ttk.Label(f, text='Phím tắt trong cửa sổ game: G khách · H 100 tim · 1/2/3 buff · R robot · K hiệp sĩ\n'
-                         'M quái · T chướng ngại · X -20 máu · D gục · F5 chơi lại', style='S.TLabel').pack(anchor='w', padx=12)
+                         'J vài chục tim · M quái · T chướng ngại · X -20 máu · D gục · N bài nhạc tiếp · F5 chơi lại', style='S.TLabel').pack(anchor='w', padx=12)
         return f
 
     def tab_form(self, nb, items):
@@ -217,6 +223,14 @@ class Panel:
                 role = key.replace('tts_voice_', '')
                 ttk.Button(f, text='Nghe thử', command=lambda role=role, k=key: (self.apply(), self.ipc.send(
                     {'cmd': 'test', 'kind': 'voice', 'value': role}))).grid(row=r * 2, column=2, padx=4)
+            elif typ == 'folder':
+                v = tk.StringVar(value=str(val))
+                ttk.Entry(f, textvariable=v, width=22).grid(row=r * 2, column=1, sticky='w', padx=6)
+                def pick(v=v):
+                    from tkinter import filedialog
+                    d = filedialog.askdirectory(title='Chọn thư mục nhạc')
+                    if d: v.set(d)
+                ttk.Button(f, text='Chọn...', command=pick).grid(row=r * 2, column=2, padx=4)
             elif typ == 'choice':
                 v = tk.StringVar(value=str(val))
                 ttk.Combobox(f, textvariable=v, values=[str(x) for x in arg], width=14, state='readonly').grid(row=r * 2, column=1, sticky='w', padx=6)

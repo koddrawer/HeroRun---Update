@@ -8,6 +8,7 @@ from .fx import Text, FX, pixel_heart, pixel_coin, chain
 from .ipc import Server
 from .tiktok_client import TikTokThread
 from . import voice as V
+from .music import Music
 
 W, H = 720, 1280
 GROUND_Y = 905
@@ -817,7 +818,7 @@ class Game:
         self.land = self.a.get('land')
         self.grass_y = self.a.meta['land_grass_y']
         self.reset()
-        self.a.music(self.cfg['music_volume'])
+        self.music = Music(self)
         if self.cfg.get('auto_connect') and self.cfg.get('username'):
             self.tt.connect(self.cfg['username'], self.cfg.get('sign_api_key', ''))
         self.status_t = 0
@@ -1056,7 +1057,6 @@ class Game:
             old = self.cfg
             self.cfg = dict(old); self.cfg.update(msg.get('data', {}))
             self.a.sfx_vol = self.cfg['sfx_volume']
-            self.a.music(self.cfg['music_volume'])
             ns = self.parse_size(self.cfg['window_size'])
             if ns != self.win_size:
                 self.win_size = ns
@@ -1073,6 +1073,10 @@ class Game:
             self.test(msg.get('kind'), msg.get('value', 1))
         elif cmd == 'reset':
             self.reset(); self.log('Đã chơi lại từ đầu')
+        elif cmd == 'music_next':
+            self.music.next()
+        elif cmd == 'music_reload':
+            self.music.refresh(force=True)
         elif cmd == 'clear_guests':
             for gst in list(self.guests.values()): self.retire_guest(gst)
             self.guest_wait.clear()
@@ -1374,13 +1378,16 @@ class Game:
 
     def draw_top3(self, s):
         top = self.top3()
-        if not top: return
         th = max(1, self.cfg['likes_per_buff'])
         x0, y0, w = W - 288, 262, 280
-        h = 44 + len(top) * 58
+        h = 44 + max(1, len(top)) * 58
         self.panel_box(s, (x0, y0, w, h), 165)
         s.blit(self.heart_small, (x0 + 12, y0 + 10))
         self.text.draw(s, f'SẮP ĐỦ {th} TIM', (x0 + 46, y0 + 22), 28, (255, 140, 170), anchor='midleft', ow=2)
+        if not top:
+            k = 0.6 + 0.4 * abs(math.sin(time.time() * 2.5))
+            col = (255, int(160 + 60 * k), int(190 + 40 * k))
+            self.text.draw(s, 'Thả tim để lên bảng!', (x0 + w / 2, y0 + 70), 26, col, ow=2)
         medal = [(255, 214, 70), (210, 220, 235), (230, 150, 80)]
         for i, (uid, p) in enumerate(top):
             cy = y0 + 64 + i * 58
@@ -1462,12 +1469,14 @@ class Game:
                        'guests': len(self.guests), 'monsters': alive, 'kills': self.stats['kills'],
                        'deaths': self.stats['deaths'], 'dist': int(self.dist), 'likes': self.stats['likes'],
                        'coins': self.stats['coins'], 'buff_q': len(self.buff_q), 'helper_q': len(self.helper_q),
-                       'hp': int(self.hero.hp), 'voice': self.voice.state, 'version': C.version()})
+                       'hp': int(self.hero.hp), 'voice': self.voice.state, 'music': self.music.current or '—', 'version': C.version()})
 
     def keys(self, e):
         k = e.key
         if k == pygame.K_g: self.test('guest')
         elif k == pygame.K_h: self.test('like', self.cfg['likes_per_buff'])
+        elif k == pygame.K_j: self.test('like', random.randint(10, 35))
+        elif k == pygame.K_n: self.music.next()
         elif k == pygame.K_1: self.test('buff', 'damage')
         elif k == pygame.K_2: self.test('buff', 'heal')
         elif k == pygame.K_3: self.test('buff', 'armor')
@@ -1492,6 +1501,7 @@ class Game:
             except Exception as ex:
                 self.log(f'Lỗi xử lý sự kiện: {ex}')
         self.update(dt)
+        self.music.update(self.cfg['music_volume'])
         self.voice.pump(self.cfg['music_volume'])
         self.draw_world(self.world)
         self.cam.apply(self.world, self.screen)
