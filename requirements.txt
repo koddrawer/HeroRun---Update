@@ -2,3 +2,4 @@ pygame-ce>=2.5
 Pillow>=10
 TikTokLive>=6.4
 vieneu>=3.8
+pyvirtualcam>=0.12

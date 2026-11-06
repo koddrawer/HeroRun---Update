@@ -22,6 +22,12 @@ Hero tự chạy + bắn (bắn thẳng quái đất, bắn chéo quái bay), t�
 
 Phím tắt trong cửa sổ game: `G` khách · `H` 100 tim · `1/2/3` buff · `R` robot · `K` hiệp sĩ · `M` quái · `T` chướng ngại · `X` -20 máu · `D` gục · `F5` chơi lại.
 
+## Xuất đúng 1080x1920 (màn hình nhỏ hơn vẫn được)
+Cửa sổ game không thể cao hơn màn hình (màn 1080p → tối đa ~556x990). Muốn phát nét 1080x1920:
+1. Cài **OBS Studio** (chỉ để có *OBS Virtual Camera*, không cần mở OBS).
+2. Tab *Hiển thị* → tick **Xuất CAMERA ẢO** → *Lưu & áp dụng*.
+3. TikTok LIVE Studio → thêm nguồn **Camera** → chọn **OBS Virtual Camera** (tắt lật gương). Bỏ nguồn Window capture cũ.
+
 ## Lồng tiếng (VieNeu-TTS)
 - Chạy trên máy (CPU, ONNX) — `run.bat` tự cài `vieneu`. Lần đầu bật game sẽ tải model từ HuggingFace (vài trăm MB), sau đó dùng offline.
 - 4 vai: **người dẫn** (đọc hướng dẫn chơi mỗi 45s + chào người mới), **Hero** (cảm ơn người buff, kêu khi nhảy/trượt/trúng đòn/gục/hồi sinh, xin tim khi yếu máu), **Robot** (giọng méo kiểu robot), **Hiệp sĩ**. Mỗi vai chọn giọng riêng ở tab *Giọng nói*, có nút *Nghe thử*.

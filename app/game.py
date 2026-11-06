@@ -9,6 +9,7 @@ from .ipc import Server
 from .tiktok_client import TikTokThread
 from . import voice as V
 from .music import Music
+from .vcam import VirtualCam
 
 W, H = 720, 1280
 GROUND_Y = 905
@@ -832,6 +833,7 @@ class Game:
         self.grass_y = self.a.meta['land_grass_y']
         self.reset()
         self.music = Music(self)
+        self.vcam = VirtualCam(self)
         if self.cfg.get('auto_connect') and self.cfg.get('username'):
             self.tt.connect(self.cfg['username'], self.cfg.get('sign_api_key', ''))
         self.status_t = 0
@@ -1481,7 +1483,7 @@ class Game:
                        'guests': len(self.guests), 'monsters': alive, 'kills': self.stats['kills'],
                        'deaths': self.stats['deaths'], 'dist': int(self.dist), 'likes': self.stats['likes'],
                        'coins': self.stats['coins'], 'buff_q': len(self.buff_q), 'helper_q': len(self.helper_q),
-                       'hp': int(self.hero.hp), 'voice': self.voice.state, 'music': self.music.current or '—', 'window': '%dx%d' % tuple(self.win_size), 'version': C.version()})
+                       'hp': int(self.hero.hp), 'voice': self.voice.state, 'music': self.music.current or '—', 'window': '%dx%d' % tuple(self.win_size), 'vcam': self.vcam.state, 'version': C.version()})
 
     def keys(self, e):
         k = e.key
@@ -1518,6 +1520,7 @@ class Game:
         self.draw_world(self.world)
         self.cam.apply(self.world, self.screen)
         self.draw_hud(self.screen)
+        self.vcam.update(self.screen)
 
     def open_window(self, size_str):
         """mở cửa sổ 9:16 vừa màn hình (không vượt quá vùng làm việc -> tránh lỗi capture)"""
@@ -1532,8 +1535,8 @@ class Game:
         if str(size_str) == 'fit' or h > max_h or w > max_w:
             k = min(max_h / H, max_w / W)
             if str(size_str) != 'fit' and (h > max_h or w > max_w):
-                self.log(f'Màn hình {dw}x{dh} nhỏ hơn {w}x{h} → cửa sổ thu về vừa màn hình. '
-                         f'TikTok LIVE Studio vẫn tự phóng lên 1080x1920.')
+                self.log(f'Màn hình {dw}x{dh} nhỏ hơn {w}x{h} → cửa sổ chỉ thu về vừa màn hình. '
+                         f'Muốn xuất đúng {w}x{h}: bật "Camera ảo" ở tab Hiển thị.')
             h = int(H * k) // 2 * 2; w = int(h * 9 / 16) // 2 * 2
         self.win_size = (w, h)
         self.window = pygame.display.set_mode(self.win_size, pygame.RESIZABLE)
@@ -1572,6 +1575,7 @@ class Game:
                 self.status_t = 1.0
                 self.send_status()
         self.tt.disconnect()
+        self.vcam.stop()
         pygame.quit()
 
 

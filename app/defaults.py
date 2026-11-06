@@ -9,6 +9,10 @@ DEFAULTS = {
     "window_size": "720x1280",      # 540x960 | 720x1280 | 1080x1920
     "fps": 60,
     "window_x": -1, "window_y": -1,  # -1 = để hệ điều hành tự đặt
+    "vcam_enabled": False,          # xuất ra camera ảo (OBS Virtual Camera) đúng độ phân giải
+    "vcam_size": "1080x1920",
+    "vcam_fps": 30,
+    "vcam_backend": "",             # "" = tự chọn | obs | unitycapture
 
     # ---- nhân vật ----
     "scroll_speed": 230,           # px/giây

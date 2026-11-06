@@ -1,11 +1,11 @@
 {
- "version": "1.1.4",
- "notes": "Sửa lỗi hiển thị cửa sổ to hơn màn hình; đổi quái khách thành Pet dễ thương",
+ "version": "1.1.5",
+ "notes": "Xuất camera ảo đúng 1080x1920 (cần OBS Studio)",
  "files": [
   {
    "path": "README.md",
-   "sha256": "5c656f258a2f80fcdd16def06900c1de16ef0de082c45ac82803dbf9dcb2bdfb",
-   "size": 3868
+   "sha256": "5d86f218408e116d51a28558474818a8649eabb4082f55c341ad04900be8e76e",
+   "size": 4356
   },
   {
    "path": "build_exe.bat",
@@ -19,8 +19,8 @@
   },
   {
    "path": "requirements.txt",
-   "sha256": "4c2e72e530274eb9d5e804f61920a9beb4411d16925c186a5c1811b0ee4862fe",
-   "size": 54
+   "sha256": "6b67590989e2fda00e2a36bca2130bca5d3163817821d711501a5949b47a4261",
+   "size": 73
   },
   {
    "path": "run.bat",
@@ -29,8 +29,8 @@
   },
   {
    "path": "version.json",
-   "sha256": "1e76952caf3f8de38bb5f49efc556ffb9f53295c187e4ba2a2e8b0ea71307d0d",
-   "size": 133
+   "sha256": "8156c7eaf40862f34800a8bbed47d350505a8fce4d983b4ccbe9c65261888303",
+   "size": 87
   },
   {
    "path": "assets/music/track1_adventure.ogg",
@@ -1349,8 +1349,8 @@
   },
   {
    "path": "app/defaults.py",
-   "sha256": "09e9a3995ff29b53bc4181924675425cf39e030d145acb88404401638e883aaa",
-   "size": 3791
+   "sha256": "106d4f6f937697247bff5bce6f3f9a841f8f4cc0f5259946e592425e4fd04147",
+   "size": 4024
   },
   {
    "path": "app/fx.py",
@@ -1359,8 +1359,8 @@
   },
   {
    "path": "app/game.py",
-   "sha256": "156e611d77a07500a6b6343c950872f61956fe8a5e22b53851f1a99cbdb709dd",
-   "size": 68824
+   "sha256": "010284637ee5404b654f0d10672217837b593522ea7a89d66a1d0665a8d58a46",
+   "size": 69003
   },
   {
    "path": "app/ipc.py",
@@ -1374,8 +1374,8 @@
   },
   {
    "path": "app/panel.py",
-   "sha256": "88aa1a546ff2ce1976ebf733c8dc14bf4a96468a12406e681b58364555c0c431",
-   "size": 23439
+   "sha256": "1eb3b54339697f0cbdfd28ede6a8dd2306f56dd2866578f51559190d3899ac7a",
+   "size": 23919
   },
   {
    "path": "app/tiktok_client.py",
@@ -1386,6 +1386,11 @@
    "path": "app/updater.py",
    "sha256": "14956922aa4bdaff3fae02c0fdd80738c7ba76c57a65f058b05555f80112978d",
    "size": 3378
+  },
+  {
+   "path": "app/vcam.py",
+   "sha256": "97cdd7ce0cb12bd61d0bd42c730fca67aae96f12a8310df18db79fc64ccaa787",
+   "size": 3328
   },
   {
    "path": "app/voice.py",

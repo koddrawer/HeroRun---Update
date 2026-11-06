@@ -73,6 +73,9 @@ SPEC = {
     'Hiển thị': [
         ('window_size', 'Cửa sổ game (9:16)', 'choice', ['fit', '540x960', '720x1280', '1080x1920']),
         ('fps', 'FPS', 'choice', [30, 60]),
+        ('vcam_enabled', 'Xuất CAMERA ẢO (đúng 1080x1920, không cần màn hình to)', 'bool', None),
+        ('vcam_size', 'Độ phân giải camera ảo', 'choice', ['1080x1920', '720x1280']),
+        ('vcam_fps', 'FPS camera ảo', 'choice', [30, 60]),
         ('title', 'Tiêu đề trên HUD', 'str', None),
         ('show_hud', 'Hiện HUD', 'bool', None),
         ('show_guide', 'Hiện bảng hướng dẫn', 'bool', None),
@@ -88,7 +91,7 @@ SPEC = {
 from .voice import TURBO_VOICES, NANO_VOICES
 VOICE_LIST = TURBO_VOICES + [v for v in NANO_VOICES if v not in TURBO_VOICES]
 
-GUIDE = {'window_size': 'fit = lớn nhất vừa màn hình. Cửa sổ không được cao hơn màn hình, nếu không LIVE Studio capture bị lỗi;\nmàn 1080p dùng fit hoặc 540x960. Kéo giãn cửa sổ thoải mái, game luôn giữ 9:16.','music_source': 'auto = thư mục của bạn nếu có bài, không thì 3 bài dựng sẵn; folder = chỉ thư mục của bạn;\nbuiltin = 3 bài dựng sẵn; classic = nhạc cũ của game; off = tắt',
+GUIDE = {'vcam_enabled': 'Cần cài OBS Studio (để có OBS Virtual Camera, không cần mở OBS).\nTrong LIVE Studio: thêm nguồn Camera → chọn "OBS Virtual Camera" (tắt lật gương).','window_size': 'fit = lớn nhất vừa màn hình. Cửa sổ không được cao hơn màn hình, nếu không LIVE Studio capture bị lỗi;\nmàn 1080p dùng fit hoặc 540x960. Kéo giãn cửa sổ thoải mái, game luôn giữ 9:16.','music_source': 'auto = thư mục của bạn nếu có bài, không thì 3 bài dựng sẵn; folder = chỉ thư mục của bạn;\nbuiltin = 3 bài dựng sẵn; classic = nhạc cũ của game; off = tắt',
          'music_folder': 'Bỏ file mp3/ogg/wav/flac vào đây (mặc định thư mục music\\ cạnh app)','tts_mode': 'v3turbo hay hơn; v3nano nhẹ cho máy yếu (giọng riêng: Minh Quân, Ái Hân, Hữu Quân...)',
          'tts_precision': 'int8 nhanh ~1.6x nhưng CPU phải hỗ trợ VNNI, nếu méo tiếng thì để fp32',
          'tts_threads': 'Lần đầu chạy sẽ tải model từ HuggingFace; câu đã đọc được lưu ở voice_cache\\','buff_mode': 'auto = ưu tiên thứ Hero cần; random; cycle = lần lượt',
@@ -171,7 +174,7 @@ class Panel:
         keys = [('fps', 'FPS'), ('hp', 'Máu Hero'), ('dist', 'Quãng đường (m)'), ('kills', 'Quái đã diệt'),
                 ('deaths', 'Số lần gục'), ('guests', 'Pet'), ('monsters', 'Quái trên màn'),
                 ('likes', 'Tổng tim'), ('coins', 'Tổng xu'), ('buff_q', 'Buff đang chờ'), ('helper_q', 'Trợ thủ đang chờ'),
-                ('voice', 'Giọng nói'), ('music', 'Đang phát'), ('window', 'Cửa sổ game')]
+                ('voice', 'Giọng nói'), ('music', 'Đang phát'), ('window', 'Cửa sổ game'), ('vcam', 'Camera ảo')]
         for i, (k, lbl) in enumerate(keys):
             ttk.Label(sf, text=lbl, style='S.TLabel').grid(row=i // 2, column=(i % 2) * 2, sticky='w', padx=6, pady=1)
             l = ttk.Label(sf, text='—'); l.grid(row=i // 2, column=(i % 2) * 2 + 1, sticky='w', padx=6)
