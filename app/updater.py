@@ -27,9 +27,21 @@ def _vt(v):
         return (0,)
 
 
-def check(repo, branch='main'):
-    """trả về (manifest, [file cần tải]) hoặc (None, [])"""
-    base = f'https://raw.githubusercontent.com/{repo.strip().lower()}/{branch}/'
+def _base(repo, branch):
+    """dùng SHA commit mới nhất (raw theo branch bị CDN cache ~5 phút)"""
+    repo = repo.strip().lower()
+    ref = branch
+    try:
+        data = json.loads(_get(f'https://api.github.com/repos/{repo}/commits/{branch}', 10).decode('utf-8'))
+        ref = data.get('sha') or branch
+    except Exception:
+        pass
+    return f'https://raw.githubusercontent.com/{repo}/{ref}/'
+
+
+def check(repo, branch='main', base=None):
+    """trả về (manifest, [file cần tải])"""
+    base = base or _base(repo, branch)
     man = json.loads(_get(base + 'manifest.json').decode('utf-8'))
     need = []
     for f in man.get('files', []):
@@ -43,8 +55,8 @@ def check(repo, branch='main'):
 
 def apply(repo, branch='main', log=print, progress=None):
     """tải file thay đổi; trả về True nếu đã cập nhật"""
-    base = f'https://raw.githubusercontent.com/{repo.strip().lower()}/{branch}/'
-    man, need = check(repo, branch)
+    base = _base(repo, branch)
+    man, need = check(repo, branch, base)
     cur = C.version()
     if not need:
         log(f'Đang ở bản mới nhất ({cur})')

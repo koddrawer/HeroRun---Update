@@ -1364,8 +1364,8 @@
   },
   {
    "path": "app/updater.py",
-   "sha256": "3a96cfb092510fa0aea871fb02183f1d0a0df4f84598e8358ad092cd3b3c4b6d",
-   "size": 3058
+   "sha256": "14956922aa4bdaff3fae02c0fdd80738c7ba76c57a65f058b05555f80112978d",
+   "size": 3378
   },
   {
    "path": "app/voice.py",
