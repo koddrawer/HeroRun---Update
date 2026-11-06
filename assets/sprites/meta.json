@@ -1,0 +1,1298 @@
+{
+ "hero": {
+  "frames": {
+   "jump": [
+    {
+     "img": "hero_jump_0",
+     "ax": 57.72,
+     "ay": 177.06
+    },
+    {
+     "img": "hero_jump_1",
+     "ax": 63.18,
+     "ay": 177.06
+    },
+    {
+     "img": "hero_jump_2",
+     "ax": 52.260000000000005,
+     "ay": 177.06
+    },
+    {
+     "img": "hero_jump_3",
+     "ax": 52.260000000000005,
+     "ay": 177.06
+    },
+    {
+     "img": "hero_jump_4",
+     "ax": 54.6,
+     "ay": 177.06
+    },
+    {
+     "img": "hero_jump_5",
+     "ax": 54.6,
+     "ay": 177.06
+    },
+    {
+     "img": "hero_jump_6",
+     "ax": 73.32000000000001,
+     "ay": 177.06
+    },
+    {
+     "img": "hero_jump_7",
+     "ax": 60.84,
+     "ay": 177.06
+    }
+   ],
+   "run": [
+    {
+     "img": "hero_run_0",
+     "ax": 60.84,
+     "ay": 139.62
+    },
+    {
+     "img": "hero_run_1",
+     "ax": 62.400000000000006,
+     "ay": 139.62
+    },
+    {
+     "img": "hero_run_2",
+     "ax": 68.64,
+     "ay": 139.62
+    },
+    {
+     "img": "hero_run_3",
+     "ax": 72.54,
+     "ay": 139.62
+    },
+    {
+     "img": "hero_run_4",
+     "ax": 72.54,
+     "ay": 139.62
+    },
+    {
+     "img": "hero_run_5",
+     "ax": 67.86,
+     "ay": 139.62
+    },
+    {
+     "img": "hero_run_6",
+     "ax": 72.54,
+     "ay": 139.62
+    },
+    {
+     "img": "hero_run_7",
+     "ax": 71.76,
+     "ay": 139.62
+    }
+   ],
+   "shoot": [
+    {
+     "img": "hero_shoot_0",
+     "ax": 54.6,
+     "ay": 126.36
+    },
+    {
+     "img": "hero_shoot_1",
+     "ax": 48.36,
+     "ay": 126.36
+    },
+    {
+     "img": "hero_shoot_2",
+     "ax": 52.260000000000005,
+     "ay": 126.36
+    },
+    {
+     "img": "hero_shoot_3",
+     "ax": 55.38,
+     "ay": 126.36
+    },
+    {
+     "img": "hero_shoot_4",
+     "ax": 52.260000000000005,
+     "ay": 126.36
+    },
+    {
+     "img": "hero_shoot_5",
+     "ax": 53.82,
+     "ay": 126.36
+    },
+    {
+     "img": "hero_shoot_6",
+     "ax": 53.82,
+     "ay": 126.36
+    },
+    {
+     "img": "hero_shoot_7",
+     "ax": 54.6,
+     "ay": 126.36
+    }
+   ],
+   "shoot45": [
+    {
+     "img": "hero_shoot45_0",
+     "ax": 56.160000000000004,
+     "ay": 125.58
+    },
+    {
+     "img": "hero_shoot45_1",
+     "ax": 51.480000000000004,
+     "ay": 125.58
+    },
+    {
+     "img": "hero_shoot45_2",
+     "ax": 57.72,
+     "ay": 125.58
+    },
+    {
+     "img": "hero_shoot45_3",
+     "ax": 58.5,
+     "ay": 125.58
+    },
+    {
+     "img": "hero_shoot45_4",
+     "ax": 56.160000000000004,
+     "ay": 125.58
+    },
+    {
+     "img": "hero_shoot45_5",
+     "ax": 59.28,
+     "ay": 125.58
+    },
+    {
+     "img": "hero_shoot45_6",
+     "ax": 61.620000000000005,
+     "ay": 125.58
+    },
+    {
+     "img": "hero_shoot45_7",
+     "ax": 55.38,
+     "ay": 125.58
+    }
+   ],
+   "slide": [
+    {
+     "img": "hero_slide_0",
+     "ax": 57.72,
+     "ay": 107.64
+    },
+    {
+     "img": "hero_slide_1",
+     "ax": 50.7,
+     "ay": 107.64
+    },
+    {
+     "img": "hero_slide_2",
+     "ax": 76.44,
+     "ay": 107.64
+    },
+    {
+     "img": "hero_slide_3",
+     "ax": 85.8,
+     "ay": 107.64
+    },
+    {
+     "img": "hero_slide_4",
+     "ax": 85.02,
+     "ay": 107.64
+    },
+    {
+     "img": "hero_slide_5",
+     "ax": 72.93,
+     "ay": 107.64
+    },
+    {
+     "img": "hero_slide_6",
+     "ax": 54.6,
+     "ay": 107.64
+    },
+    {
+     "img": "hero_slide_7",
+     "ax": 54.6,
+     "ay": 107.64
+    }
+   ]
+  },
+  "muzzle_shoot": [
+   68.12000000000002,
+   -60.84
+  ],
+  "muzzle_shoot45": [
+   52.104000000000006,
+   -98.8
+  ]
+ },
+ "robot": {
+  "land": [
+   {
+    "img": "robot_land_0",
+    "hole": [
+     74.5,
+     46.0,
+     18.0
+    ],
+    "bottom": 178
+   },
+   {
+    "img": "robot_land_1",
+    "hole": [
+     77.0,
+     59.5,
+     18.5
+    ],
+    "bottom": 184
+   },
+   {
+    "img": "robot_land_2",
+    "hole": [
+     76.0,
+     77.0,
+     19.0
+    ],
+    "bottom": 183
+   },
+   {
+    "img": "robot_land_3",
+    "hole": [
+     75.5,
+     97.5,
+     18.5
+    ],
+    "bottom": 189
+   },
+   {
+    "img": "robot_land_4",
+    "hole": [
+     88.5,
+     109.0,
+     19.0
+    ],
+    "bottom": 181
+   },
+   {
+    "img": "robot_land_5",
+    "hole": [
+     72.0,
+     113.0,
+     19.0
+    ],
+    "bottom": 181
+   },
+   {
+    "img": "robot_land_6",
+    "hole": [
+     69.5,
+     109.5,
+     18.5
+    ],
+    "bottom": 181
+   },
+   {
+    "img": "robot_land_7",
+    "hole": [
+     60.0,
+     104.0,
+     19.0
+    ],
+    "bottom": 180
+   }
+  ],
+  "attack": [
+   {
+    "img": "robot_attack_0",
+    "hole": [
+     66.0,
+     57.0,
+     19.0
+    ],
+    "bottom": 135
+   },
+   {
+    "img": "robot_attack_1",
+    "hole": [
+     78.0,
+     56.5,
+     18.5
+    ],
+    "bottom": 135
+   },
+   {
+    "img": "robot_attack_2",
+    "hole": [
+     79.0,
+     56.5,
+     18.5
+    ],
+    "bottom": 135
+   },
+   {
+    "img": "robot_attack_3",
+    "hole": [
+     95.0,
+     56.5,
+     18.5
+    ],
+    "bottom": 135
+   },
+   {
+    "img": "robot_attack_4",
+    "hole": [
+     76.5,
+     55.5,
+     18.5
+    ],
+    "bottom": 135
+   },
+   {
+    "img": "robot_attack_5",
+    "hole": [
+     73.0,
+     56.0,
+     19.0
+    ],
+    "bottom": 135
+   },
+   {
+    "img": "robot_attack_6",
+    "hole": [
+     60.5,
+     55.5,
+     19.5
+    ],
+    "bottom": 135
+   }
+  ],
+  "takeoff": [
+   {
+    "img": "robot_takeoff_0",
+    "hole": [
+     73.5,
+     81.5,
+     18.5
+    ],
+    "bottom": 152
+   },
+   {
+    "img": "robot_takeoff_1",
+    "hole": [
+     74.5,
+     78.5,
+     17.5
+    ],
+    "bottom": 153
+   },
+   {
+    "img": "robot_takeoff_2",
+    "hole": [
+     75.0,
+     70.5,
+     16.5
+    ],
+    "bottom": 154
+   },
+   {
+    "img": "robot_takeoff_3",
+    "hole": [
+     73.0,
+     59.0,
+     17.0
+    ],
+    "bottom": 154
+   },
+   {
+    "img": "robot_takeoff_4",
+    "hole": [
+     71.5,
+     50.0,
+     17.0
+    ],
+    "bottom": 154
+   },
+   {
+    "img": "robot_takeoff_5",
+    "hole": [
+     70.5,
+     38.5,
+     16.5
+    ],
+    "bottom": 157
+   },
+   {
+    "img": "robot_takeoff_6",
+    "hole": [
+     65.5,
+     30.0,
+     17.0
+    ],
+    "bottom": 154
+   },
+   {
+    "img": "robot_takeoff_7",
+    "hole": [
+     67.5,
+     30.0,
+     17.0
+    ],
+    "bottom": 148
+   }
+  ],
+  "fly": [
+   {
+    "img": "robot_fly_0",
+    "hole": [
+     111.5,
+     43.5,
+     16.5
+    ],
+    "bottom": 103
+   },
+   {
+    "img": "robot_fly_1",
+    "hole": [
+     129.5,
+     43.0,
+     17.0
+    ],
+    "bottom": 102
+   },
+   {
+    "img": "robot_fly_2",
+    "hole": [
+     124.5,
+     43.5,
+     16.5
+    ],
+    "bottom": 101
+   },
+   {
+    "img": "robot_fly_3",
+    "hole": [
+     139.5,
+     46.0,
+     17.0
+    ],
+    "bottom": 98
+   },
+   {
+    "img": "robot_fly_4",
+    "hole": [
+     144.5,
+     47.0,
+     17.0
+    ],
+    "bottom": 95
+   },
+   {
+    "img": "robot_fly_5",
+    "hole": [
+     144.5,
+     47.0,
+     17.0
+    ],
+    "bottom": 95
+   },
+   {
+    "img": "robot_fly_6",
+    "hole": [
+     148.0,
+     47.5,
+     17.5
+    ],
+    "bottom": 96
+   }
+  ]
+ },
+ "knight": {
+  "appear": [
+   {
+    "img": "knight_appear_0",
+    "hole": null,
+    "bottom": 175
+   },
+   {
+    "img": "knight_appear_1",
+    "hole": [
+     54.5,
+     80.5,
+     16.5
+    ],
+    "bottom": 175
+   },
+   {
+    "img": "knight_appear_2",
+    "hole": [
+     58.0,
+     77.0,
+     18.0
+    ],
+    "bottom": 175
+   },
+   {
+    "img": "knight_appear_3",
+    "hole": [
+     60.0,
+     69.5,
+     19.5
+    ],
+    "bottom": 174
+   },
+   {
+    "img": "knight_appear_4",
+    "hole": [
+     58.5,
+     62.0,
+     20.0
+    ],
+    "bottom": 175
+   },
+   {
+    "img": "knight_appear_5",
+    "hole": [
+     61.5,
+     58.5,
+     20.5
+    ],
+    "bottom": 174
+   },
+   {
+    "img": "knight_appear_6",
+    "hole": [
+     62.0,
+     57.0,
+     21.0
+    ],
+    "bottom": 174
+   },
+   {
+    "img": "knight_appear_7",
+    "hole": [
+     63.5,
+     57.0,
+     22.0
+    ],
+    "bottom": 173
+   }
+  ],
+  "attack": [
+   {
+    "img": "knight_attack_0",
+    "hole": [
+     62.5,
+     64.5,
+     17.5
+    ],
+    "bottom": 152
+   },
+   {
+    "img": "knight_attack_1",
+    "hole": [
+     59.5,
+     63.0,
+     17.0
+    ],
+    "bottom": 152
+   },
+   {
+    "img": "knight_attack_2",
+    "hole": [
+     43.5,
+     57.5,
+     19.5
+    ],
+    "bottom": 150
+   },
+   {
+    "img": "knight_attack_3",
+    "hole": [
+     44.0,
+     54.5,
+     19.5
+    ],
+    "bottom": 151
+   },
+   {
+    "img": "knight_attack_4",
+    "hole": [
+     49.5,
+     54.0,
+     19.0
+    ],
+    "bottom": 151
+   },
+   {
+    "img": "knight_attack_5",
+    "hole": [
+     57.0,
+     56.0,
+     19.0
+    ],
+    "bottom": 151
+   },
+   {
+    "img": "knight_attack_6",
+    "hole": [
+     51.0,
+     55.0,
+     19.0
+    ],
+    "bottom": 151
+   },
+   {
+    "img": "knight_attack_7",
+    "hole": [
+     68.0,
+     57.5,
+     18.5
+    ],
+    "bottom": 149
+   }
+  ],
+  "vanish": [
+   {
+    "img": "knight_vanish_0",
+    "hole": [
+     57.5,
+     73.5,
+     19.5
+    ],
+    "bottom": 172
+   },
+   {
+    "img": "knight_vanish_1",
+    "hole": [
+     64.5,
+     73.5,
+     19.5
+    ],
+    "bottom": 176
+   },
+   {
+    "img": "knight_vanish_2",
+    "hole": [
+     62.5,
+     71.5,
+     19.5
+    ],
+    "bottom": 178
+   },
+   {
+    "img": "knight_vanish_3",
+    "hole": [
+     67.0,
+     71.5,
+     19.5
+    ],
+    "bottom": 177
+   },
+   {
+    "img": "knight_vanish_4",
+    "hole": [
+     68.5,
+     71.0,
+     20.0
+    ],
+    "bottom": 177
+   },
+   {
+    "img": "knight_vanish_5",
+    "hole": [
+     70.0,
+     67.5,
+     17.5
+    ],
+    "bottom": 178
+   },
+   {
+    "img": "knight_vanish_6",
+    "hole": [
+     76.0,
+     71.0,
+     20.0
+    ],
+    "bottom": 172
+   },
+   {
+    "img": "knight_vanish_7",
+    "hole": [
+     69.5,
+     71.5,
+     19.5
+    ],
+    "bottom": 173
+   }
+  ]
+ },
+ "guests": [
+  {
+   "img": "guest_dragon",
+   "kind": "dragon",
+   "fly": 1,
+   "hole": [
+    84.0,
+    59.0,
+    26.0
+   ]
+  },
+  {
+   "img": "guest_yeti",
+   "kind": "yeti",
+   "fly": 0,
+   "hole": [
+    81.5,
+    59.0,
+    25.0
+   ]
+  },
+  {
+   "img": "guest_golem",
+   "kind": "golem",
+   "fly": 0,
+   "hole": [
+    71.0,
+    59.5,
+    25.5
+   ]
+  },
+  {
+   "img": "guest_slime",
+   "kind": "slime",
+   "fly": 0,
+   "hole": [
+    62.5,
+    61.5,
+    26.5
+   ]
+  },
+  {
+   "img": "guest_reaper",
+   "kind": "reaper",
+   "fly": 1,
+   "hole": [
+    75.0,
+    63.5,
+    25.5
+   ]
+  },
+  {
+   "img": "guest_cyclops",
+   "kind": "cyclops",
+   "fly": 0,
+   "hole": [
+    67.5,
+    60.0,
+    27.0
+   ]
+  },
+  {
+   "img": "guest_angel",
+   "kind": "angel",
+   "fly": 1,
+   "hole": [
+    72.0,
+    57.5,
+    25.5
+   ]
+  },
+  {
+   "img": "guest_octopus",
+   "kind": "octopus",
+   "fly": 1,
+   "hole": [
+    72.0,
+    58.0,
+    27.0
+   ]
+  },
+  {
+   "img": "guest_bee",
+   "kind": "bee",
+   "fly": 1,
+   "hole": [
+    74.0,
+    58.5,
+    26.5
+   ]
+  }
+ ],
+ "buffs": {
+  "damage": {
+   "big": {
+    "img": "buff_big_damage",
+    "hole": [
+     107.0,
+     95.0,
+     54.0
+    ]
+   },
+   "small": [
+    {
+     "img": "buff_small_damage_0",
+     "hole": [
+      34.0,
+      33.5,
+      19.5
+     ]
+    },
+    {
+     "img": "buff_small_damage_1",
+     "hole": [
+      34.0,
+      41.5,
+      19.5
+     ]
+    },
+    {
+     "img": "buff_small_damage_2",
+     "hole": [
+      33.0,
+      42.0,
+      20.0
+     ]
+    },
+    {
+     "img": "buff_small_damage_3",
+     "hole": [
+      31.0,
+      38.5,
+      19.5
+     ]
+    }
+   ]
+  },
+  "heal": {
+   "big": {
+    "img": "buff_big_heal",
+    "hole": [
+     103.0,
+     95.0,
+     52.0
+    ]
+   },
+   "small": [
+    {
+     "img": "buff_small_heal_0",
+     "hole": [
+      34.5,
+      33.0,
+      20.0
+     ]
+    },
+    {
+     "img": "buff_small_heal_1",
+     "hole": [
+      34.0,
+      42.0,
+      20.0
+     ]
+    },
+    {
+     "img": "buff_small_heal_2",
+     "hole": [
+      34.0,
+      42.0,
+      19.0
+     ]
+    },
+    {
+     "img": "buff_small_heal_3",
+     "hole": [
+      34.0,
+      40.0,
+      19.0
+     ]
+    }
+   ]
+  },
+  "armor": {
+   "big": {
+    "img": "buff_big_armor",
+    "hole": [
+     107.0,
+     94.0,
+     47.0
+    ]
+   },
+   "small": [
+    {
+     "img": "buff_small_armor_0",
+     "hole": [
+      34.0,
+      34.5,
+      19.5
+     ]
+    },
+    {
+     "img": "buff_small_armor_1",
+     "hole": [
+      33.5,
+      42.5,
+      19.5
+     ]
+    },
+    {
+     "img": "buff_small_armor_2",
+     "hole": [
+      37.0,
+      41.0,
+      18.0
+     ]
+    },
+    {
+     "img": "buff_small_armor_3",
+     "hole": [
+      35.5,
+      30.0,
+      7.0
+     ]
+    }
+   ]
+  }
+ },
+ "monsters": [
+  {
+   "id": "slime_green",
+   "name": "Slime Xanh",
+   "img": "mon_slime_green",
+   "fly": false,
+   "proj": [
+    "mon_slime_green_p0",
+    "mon_slime_green_p1",
+    "mon_slime_green_p2"
+   ]
+  },
+  {
+   "id": "slime_ice",
+   "name": "Slime Băng",
+   "img": "mon_slime_ice",
+   "fly": false,
+   "proj": [
+    "mon_slime_ice_p0",
+    "mon_slime_ice_p1",
+    "mon_slime_ice_p2"
+   ]
+  },
+  {
+   "id": "slime_fire",
+   "name": "Slime Lửa",
+   "img": "mon_slime_fire",
+   "fly": false,
+   "proj": [
+    "mon_slime_fire_p0",
+    "mon_slime_fire_p1",
+    "mon_slime_fire_p2"
+   ]
+  },
+  {
+   "id": "slime_spike",
+   "name": "Slime Gai",
+   "img": "mon_slime_spike",
+   "fly": false,
+   "proj": [
+    "mon_slime_spike_p0",
+    "mon_slime_spike_p1",
+    "mon_slime_spike_p2"
+   ]
+  },
+  {
+   "id": "mushroom",
+   "name": "Nấm Độc",
+   "img": "mon_mushroom",
+   "fly": false,
+   "proj": [
+    "mon_mushroom_p0",
+    "mon_mushroom_p1",
+    "mon_mushroom_p2"
+   ]
+  },
+  {
+   "id": "boar",
+   "name": "Heo Rừng",
+   "img": "mon_boar",
+   "fly": false,
+   "proj": [
+    "mon_boar_p0",
+    "mon_boar_p1"
+   ]
+  },
+  {
+   "id": "wolf",
+   "name": "Sói Hoang",
+   "img": "mon_wolf",
+   "fly": false,
+   "proj": [
+    "mon_wolf_p0",
+    "mon_wolf_p1",
+    "mon_wolf_p2"
+   ]
+  },
+  {
+   "id": "bee",
+   "name": "Ong Độc",
+   "img": "mon_bee",
+   "fly": true,
+   "proj": [
+    "mon_bee_p0",
+    "mon_bee_p1",
+    "mon_bee_p2"
+   ]
+  },
+  {
+   "id": "bat",
+   "name": "Dơi Hút Máu",
+   "img": "mon_bat",
+   "fly": true,
+   "proj": [
+    "mon_bat_p0",
+    "mon_bat_p1",
+    "mon_bat_p2"
+   ]
+  },
+  {
+   "id": "spider",
+   "name": "Nhện Độc",
+   "img": "mon_spider",
+   "fly": false,
+   "proj": [
+    "mon_spider_p0",
+    "mon_spider_p1",
+    "mon_spider_p2"
+   ]
+  },
+  {
+   "id": "scorpion",
+   "name": "Bọ Cạp",
+   "img": "mon_scorpion",
+   "fly": false,
+   "proj": [
+    "mon_scorpion_p0",
+    "mon_scorpion_p1",
+    "mon_scorpion_p2"
+   ]
+  },
+  {
+   "id": "golem_rock",
+   "name": "Golem Đá",
+   "img": "mon_golem_rock",
+   "fly": false,
+   "proj": [
+    "mon_golem_rock_p0",
+    "mon_golem_rock_p1",
+    "mon_golem_rock_p2"
+   ]
+  },
+  {
+   "id": "cactus",
+   "name": "Xương Rồng",
+   "img": "mon_cactus",
+   "fly": false,
+   "proj": [
+    "mon_cactus_p0",
+    "mon_cactus_p1",
+    "mon_cactus_p2"
+   ]
+  },
+  {
+   "id": "maneater",
+   "name": "Cây Ăn Thịt",
+   "img": "mon_maneater",
+   "fly": false,
+   "proj": [
+    "mon_maneater_p0",
+    "mon_maneater_p1",
+    "mon_maneater_p2"
+   ]
+  },
+  {
+   "id": "golem_ice",
+   "name": "Golem Băng",
+   "img": "mon_golem_ice",
+   "fly": false,
+   "proj": [
+    "mon_golem_ice_p0",
+    "mon_golem_ice_p1",
+    "mon_golem_ice_p2"
+   ]
+  },
+  {
+   "id": "skeleton",
+   "name": "Bộ Xương",
+   "img": "mon_skeleton",
+   "fly": false,
+   "proj": [
+    "mon_skeleton_p0",
+    "mon_skeleton_p1",
+    "mon_skeleton_p2"
+   ]
+  },
+  {
+   "id": "darkmage",
+   "name": "Pháp Sư Hắc Ám",
+   "img": "mon_darkmage",
+   "fly": false,
+   "proj": [
+    "mon_darkmage_p0",
+    "mon_darkmage_p1",
+    "mon_darkmage_p2"
+   ]
+  },
+  {
+   "id": "goblin",
+   "name": "Goblin",
+   "img": "mon_goblin",
+   "fly": false,
+   "proj": [
+    "mon_goblin_p0",
+    "mon_goblin_p1",
+    "mon_goblin_p2"
+   ]
+  },
+  {
+   "id": "orc",
+   "name": "Orc",
+   "img": "mon_orc",
+   "fly": false,
+   "proj": [
+    "mon_orc_p0"
+   ]
+  },
+  {
+   "id": "treant",
+   "name": "Người Cây",
+   "img": "mon_treant",
+   "fly": false,
+   "proj": [
+    "mon_treant_p0",
+    "mon_treant_p1"
+   ]
+  }
+ ],
+ "traps": [
+  {
+   "id": "spike_block",
+   "img": "trap_spike_block",
+   "action": "jump",
+   "hang": 0
+  },
+  {
+   "id": "spike_updown",
+   "img": "trap_spike_updown",
+   "action": "jump",
+   "hang": 0
+  },
+  {
+   "id": "spike_log",
+   "img": "trap_spike_log",
+   "action": "jump",
+   "hang": 0
+  },
+  {
+   "id": "mace",
+   "img": "trap_mace",
+   "action": "slide",
+   "hang": 1
+  },
+  {
+   "id": "axe",
+   "img": "trap_axe",
+   "action": "slide",
+   "hang": 1
+  },
+  {
+   "id": "saw",
+   "img": "trap_saw",
+   "action": "jump",
+   "hang": 0
+  },
+  {
+   "id": "lava",
+   "img": "trap_lava",
+   "action": "jump",
+   "hang": 0
+  },
+  {
+   "id": "lava2",
+   "img": "trap_lava2",
+   "action": "jump",
+   "hang": 0
+  },
+  {
+   "id": "ice",
+   "img": "trap_ice",
+   "action": "jump",
+   "hang": 0
+  },
+  {
+   "id": "thorns",
+   "img": "trap_thorns",
+   "action": "jump",
+   "hang": 0
+  },
+  {
+   "id": "boulder",
+   "img": "trap_boulder",
+   "action": "jump",
+   "hang": 0
+  },
+  {
+   "id": "spikewall",
+   "img": "trap_spikewall",
+   "action": "jump",
+   "hang": 0
+  },
+  {
+   "id": "flame",
+   "img": "trap_flame",
+   "action": "slide",
+   "hang": 2
+  },
+  {
+   "id": "arrows",
+   "img": "trap_arrows",
+   "action": "slide",
+   "hang": 2
+  },
+  {
+   "id": "swing",
+   "img": "trap_swing",
+   "action": "slide",
+   "hang": 1
+  },
+  {
+   "id": "crusher",
+   "img": "trap_crusher",
+   "action": "slide",
+   "hang": 1
+  },
+  {
+   "id": "ceilspike",
+   "img": "trap_ceilspike",
+   "action": "slide",
+   "hang": 1
+  }
+ ],
+ "mids": [
+  "mid_a00",
+  "mid_a01",
+  "mid_a10",
+  "mid_a11",
+  "mid_a20",
+  "mid_a21",
+  "mid_a30",
+  "mid_a31",
+  "mid_b00",
+  "mid_b01",
+  "mid_b10",
+  "mid_b11",
+  "mid_b20",
+  "mid_b21"
+ ],
+ "clouds": [
+  "cloud_0",
+  "cloud_1",
+  "cloud_2",
+  "cloud_3",
+  "cloud_4",
+  "cloud_5",
+  "cloud_6"
+ ],
+ "land_grass_y": 52.800000000000004
+}
