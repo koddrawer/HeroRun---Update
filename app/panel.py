@@ -116,6 +116,7 @@ class Panel:
         self.root.after(300, self.poll)
         if self.cfg.get('auto_update'):
             self.start_update(True)
+        threading.Thread(target=self.ensure_deps, daemon=True).start()
 
     # ------------------------------------------------------------
     def style(self):
@@ -346,6 +347,29 @@ class Panel:
         self.l_game.config(text='Game: ' + ('đang chạy' + (' · đã nối bảng điều khiển' if self.ipc.connected else ' · đang nối...')
                                            if alive else 'đã đóng — bấm "Mở lại cửa sổ game"'))
         self.root.after(300, self.poll)
+
+    DEPS = {'pygame': 'pygame-ce', 'PIL': 'Pillow', 'TikTokLive': 'TikTokLive', 'vieneu': 'vieneu',
+            'pyvirtualcam': 'pyvirtualcam'}
+
+    def ensure_deps(self):
+        """tự cài thư viện còn thiếu (khi bản cập nhật cần thư viện mới)"""
+        if getattr(sys, 'frozen', False): return
+        import importlib.util
+        miss = [pkg for mod, pkg in self.DEPS.items() if importlib.util.find_spec(mod) is None]
+        if not miss: return
+        self.root.after(0, lambda: self.log('Đang cài thư viện còn thiếu: ' + ', '.join(miss) + ' ...'))
+        flags = 0x08000000 if sys.platform == 'win32' else 0   # CREATE_NO_WINDOW
+        py = sys.executable
+        if py.lower().endswith('pythonw.exe'): py = py[:-11] + 'python.exe'
+        try:
+            r = subprocess.run([py, '-m', 'pip', 'install', '-q'] + miss, capture_output=True, text=True,
+                               creationflags=flags, timeout=1800)
+            ok = r.returncode == 0
+            msg = 'Đã cài xong: ' + ', '.join(miss) + ' — mở lại cửa sổ game' if ok else 'Cài thư viện lỗi: ' + (r.stderr or '')[-300:]
+        except Exception as e:
+            ok = False; msg = f'Cài thư viện lỗi: {e}'
+        self.root.after(0, lambda: self.log(msg))
+        if ok: self.root.after(0, self.restart_game)
 
     def start_update(self, silent=False):
         repo = self.v_repo.get().strip(); br = self.v_branch.get().strip() or 'main'

@@ -1,6 +1,6 @@
 {
  "version": "1.1.5",
- "notes": "Xuất camera ảo đúng 1080x1920 (cần OBS Studio)",
+ "notes": "Xuất camera ảo đúng 1080x1920 (cần OBS Studio); tự cài thư viện thiếu",
  "files": [
   {
    "path": "README.md",
@@ -9,8 +9,8 @@
   },
   {
    "path": "build_exe.bat",
-   "sha256": "c69e6974d9f744fdbbe74c45a6bbee4b4f9845d877d5f7b45fcd4c518754cad6",
-   "size": 817
+   "sha256": "238b08f6c7e658ee8fff8f737acfdf69ca654e737492667c70d47f8b0ed90712",
+   "size": 829
   },
   {
    "path": "launcher.py",
@@ -24,13 +24,13 @@
   },
   {
    "path": "run.bat",
-   "sha256": "06420717b4f325d89c08c91c48e36957a7841602ffe5e3eff2caa3ae6c32aa02",
-   "size": 261
+   "sha256": "90976577f8d1891deec8dcde9e228d5acc081162f50c6be1a80c18616d5c5510",
+   "size": 243
   },
   {
    "path": "version.json",
-   "sha256": "8156c7eaf40862f34800a8bbed47d350505a8fce4d983b4ccbe9c65261888303",
-   "size": 87
+   "sha256": "e2e6febd4a9931e6578775da1996102bfc4a93be409479fa5924f4b02efd9dfc",
+   "size": 118
   },
   {
    "path": "assets/music/track1_adventure.ogg",
@@ -1374,8 +1374,8 @@
   },
   {
    "path": "app/panel.py",
-   "sha256": "1eb3b54339697f0cbdfd28ede6a8dd2306f56dd2866578f51559190d3899ac7a",
-   "size": 23919
+   "sha256": "b6c02d9bb0eca981ced838c51c66cebe2236e4f180f679ae6e16e3be98efc184",
+   "size": 25333
   },
   {
    "path": "app/tiktok_client.py",
