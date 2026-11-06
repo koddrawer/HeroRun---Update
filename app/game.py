@@ -850,6 +850,7 @@ class Game:
         self.buff_q = []; self.buff_cur = None
         self.helper_q = []; self.helper_cur = None
         self.likes = {}; self.likes_given = {}
+        self.like_t = {}; self.like_names = {}; self.top_disp = {}; self.top_nudged = {}
         self.stats = {'kills': 0, 'deaths': 0, 'likes': 0, 'coins': 0}
         self.dist = 0.0; self.scroll_x = 0.0; self.scroll = 0.0
         self.mon_timer = 2.0; self.trap_timer = 3.0
@@ -981,6 +982,8 @@ class Game:
                     self.hearts.append([random.uniform(W - 150, W - 40), H - 230, random.uniform(-160, -110),
                                         random.uniform(0, 6), 1.6, random.choice([self.heart_img, self.heart_small])])
             self.likes[u['uid']] = self.likes.get(u['uid'], 0) + n
+            self.like_t[u['uid']] = time.time(); self.like_names[u['uid']] = u['name']
+            self.nudge_top(u)
             th = max(1, cfg['likes_per_buff'])
             given = self.likes_given.get(u['uid'], 0)
             while self.likes[u['uid']] // th > given:
@@ -1340,11 +1343,70 @@ class Game:
         # hàng chờ trợ thủ
         if self.helper_q:
             self.text.draw(s, f"Chờ: {len(self.helper_q)} trợ thủ", (W - 16, 156), 24, (255, 220, 140), anchor='topright', ow=2)
+        if cfg.get('show_top3', True): self.draw_top3(s)
         if cfg['show_guide']: self.draw_guide(s)
         if cfg.get('show_subtitle', True): self.draw_subtitle(s)
         if self.flash > 0:
             f = pygame.Surface((W, H), pygame.SRCALPHA); f.fill((255, 255, 255, int(200 * self.flash / 0.25)))
             s.blit(f, (0, 0))
+
+    # ---------------- TOP 3 sắp đủ tim ----------------
+    def top3(self):
+        th = max(1, self.cfg['likes_per_buff'])
+        now = time.time(); win = self.cfg.get('top3_window', 300)
+        rows = []
+        for uid, n in self.likes.items():
+            p = n % th
+            if p <= 0 or now - self.like_t.get(uid, 0) > win: continue
+            rows.append((p, self.like_t.get(uid, 0), uid))
+        rows.sort(key=lambda r: (-r[0], -r[1]))
+        return [(uid, p) for p, _, uid in rows[:3]]
+
+    def nudge_top(self, u):
+        """người dẫn nhắc khi ai đó đã qua 80% mà chưa đủ"""
+        if not self.cfg.get('tts_top_nudge', True): return
+        th = max(1, self.cfg['likes_per_buff'])
+        uid = u['uid']; p = self.likes[uid] % th
+        cyc = self.likes[uid] // th
+        if p >= th * 0.8 and self.top_nudged.get(uid) != cyc:
+            self.top_nudged[uid] = cyc
+            self.say('narrator', f"{V.clean_name(u['name'])} chỉ còn {th - p} tim nữa là buff cho Hero rồi!", 1, 6, 'nudge', 15)
+
+    def draw_top3(self, s):
+        top = self.top3()
+        if not top: return
+        th = max(1, self.cfg['likes_per_buff'])
+        x0, y0, w = W - 288, 262, 280
+        h = 44 + len(top) * 58
+        self.panel_box(s, (x0, y0, w, h), 165)
+        s.blit(self.heart_small, (x0 + 12, y0 + 10))
+        self.text.draw(s, f'SẮP ĐỦ {th} TIM', (x0 + 46, y0 + 22), 28, (255, 140, 170), anchor='midleft', ow=2)
+        medal = [(255, 214, 70), (210, 220, 235), (230, 150, 80)]
+        for i, (uid, p) in enumerate(top):
+            cy = y0 + 64 + i * 58
+            d = self.top_disp.get(uid, p)
+            d += (p - d) * 0.15
+            self.top_disp[uid] = d
+            pygame.draw.circle(s, medal[i], (x0 + 22, cy), 14)
+            pygame.draw.circle(s, (40, 25, 10), (x0 + 22, cy), 14, 2)
+            self.text.draw(s, str(i + 1), (x0 + 22, cy), 24, (40, 25, 10), ow=0)
+            av = self.av.get(uid, 42)
+            if av:
+                s.blit(av, av.get_rect(center=(x0 + 64, cy)))
+                pygame.draw.circle(s, medal[i], (x0 + 64, cy), 22, 2)
+            name = self.like_names.get(uid, '?')
+            self.text.draw(s, name, (x0 + 94, cy - 12), 24, (255, 255, 255), anchor='midleft', ow=2, maxw=176)
+            bx, by, bw = x0 + 94, cy + 6, 170
+            pygame.draw.rect(s, (20, 10, 20), (bx - 2, by - 2, bw + 4, 16))
+            pygame.draw.rect(s, (90, 30, 50), (bx, by, bw, 12))
+            k = clamp(d / th, 0, 1)
+            col = (255, 90, 130) if k < 0.8 else ((255, 220, 90) if int(time.time() * 6) % 2 else (255, 130, 160))
+            pygame.draw.rect(s, col, (bx, by, bw * k, 12))
+            pygame.draw.rect(s, (255, 200, 215), (bx, by, bw * k, 3))
+            self.text.draw(s, f'{p}/{th}', (bx + bw / 2, by + 6), 18, (255, 255, 255), ow=2)
+        if len(self.top_disp) > 200:
+            keep = {u for u, _ in top}
+            self.top_disp = {u: v for u, v in self.top_disp.items() if u in keep}
 
     def draw_subtitle(self, s):
         sub = self.voice.subtitle()

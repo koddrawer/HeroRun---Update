@@ -49,6 +49,9 @@ DEFAULTS = {
     "armor_max": 100,
     "zoom_like_time": 1.0,
     "show_hearts": True,
+    "show_top3": True,              # bảng TOP 3 sắp đủ tim
+    "top3_window": 300,             # chỉ tính người thả tim trong N giây gần nhất
+    "tts_top_nudge": True,          # người dẫn nhắc người sắp đủ tim
 
     # ---- donate ----
     "robot_coin": 1,

@@ -1,6 +1,6 @@
 {
- "version": "1.1.1",
- "notes": "Sửa lỗi quái khách hiện/mất liên tục; repo cập nhật HeroRun---Update",
+ "version": "1.1.2",
+ "notes": "Thêm bảng TOP 3 sắp đủ tim + người dẫn nhắc",
  "files": [
   {
    "path": "README.md",
@@ -29,8 +29,8 @@
   },
   {
    "path": "version.json",
-   "sha256": "809551aea45473c7084927ba20357ac4ea53e9a8c24d00492d977f66f7b96cb9",
-   "size": 118
+   "sha256": "47bcbf6d5d47c2c9e89467a19cae51545d9e726c7ac2db03e3072606172063df",
+   "size": 91
   },
   {
    "path": "assets/fonts/bold.ttf",
@@ -1334,8 +1334,8 @@
   },
   {
    "path": "app/defaults.py",
-   "sha256": "e20a03410e22b9a13ba41df3874576d6fdf1ded10ebaa24d5288bbae83042a4f",
-   "size": 3320
+   "sha256": "87b8cf717b17c1d0b9a21ce69f7cb419e7d59523bd2481574dfdbaa23ff542e8",
+   "size": 3568
   },
   {
    "path": "app/fx.py",
@@ -1344,8 +1344,8 @@
   },
   {
    "path": "app/game.py",
-   "sha256": "8c96e29a3e4eabba32e6dccca66ab9f18ed7ae7fbd6200f425369fdc8f2dce35",
-   "size": 63109
+   "sha256": "b2f530c75c443836653e4df39c3dac98cf83db6034c13a9722e9fbc759b94bd0",
+   "size": 66365
   },
   {
    "path": "app/ipc.py",
@@ -1354,8 +1354,8 @@
   },
   {
    "path": "app/panel.py",
-   "sha256": "a80f953e351d0184c8f34522819c748f61482d517cd99fc1122af53313a037d8",
-   "size": 21597
+   "sha256": "330bf30448982b3897b96e4491eb068c7e2345cb586ed550f770f0a790701afa",
+   "size": 21871
   },
   {
    "path": "app/tiktok_client.py",
