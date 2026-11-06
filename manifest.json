@@ -1,11 +1,11 @@
 {
- "version": "1.1.3",
- "notes": "Bảng TOP 3 luôn hiện; thêm nhạc nền mới + phát nhạc của bạn từ thư mục music",
+ "version": "1.1.4",
+ "notes": "Sửa lỗi hiển thị cửa sổ to hơn màn hình; đổi quái khách thành Pet dễ thương",
  "files": [
   {
    "path": "README.md",
-   "sha256": "68a18b56dcd1f10e221d1f0ccaa8083e867b527851e39d92e7756b0bee62fad8",
-   "size": 3877
+   "sha256": "5c656f258a2f80fcdd16def06900c1de16ef0de082c45ac82803dbf9dcb2bdfb",
+   "size": 3868
   },
   {
    "path": "build_exe.bat",
@@ -29,7 +29,7 @@
   },
   {
    "path": "version.json",
-   "sha256": "a168e1e6378e5f9181cf98e066b53a3bb13ceb77a38b3ae40b95526be0b5b73a",
+   "sha256": "1e76952caf3f8de38bb5f49efc556ffb9f53295c187e4ba2a2e8b0ea71307d0d",
    "size": 133
   },
   {
@@ -271,51 +271,6 @@
    "path": "assets/sprites/cloud_6.png",
    "sha256": "154c19fd313c7e2fb1ce4f7a9bd649e324f6ae1bb4dd55fa124ca0d52387dfe9",
    "size": 17687
-  },
-  {
-   "path": "assets/sprites/guest_angel.png",
-   "sha256": "869c1b195e07eb5112a5f0c1ed0d8786c9e7f2d27f25525c9bb01e6fd26d683e",
-   "size": 31249
-  },
-  {
-   "path": "assets/sprites/guest_bee.png",
-   "sha256": "b43a19babfaf3df126d2050704638ac6b665880ba0f624488c278a86720f2ed5",
-   "size": 31395
-  },
-  {
-   "path": "assets/sprites/guest_cyclops.png",
-   "sha256": "b6ca8ec5e1923a388f022dc9d000b732f2d65a0dbb2ba85d3354e26bb5be7da1",
-   "size": 29380
-  },
-  {
-   "path": "assets/sprites/guest_dragon.png",
-   "sha256": "84abf0841c996fe385439044c83ff771e4c56f2ddaccbd8a60cdbcb30b0b73ba",
-   "size": 30788
-  },
-  {
-   "path": "assets/sprites/guest_golem.png",
-   "sha256": "34a6aee260866761d8506693b78fbaa0854bcd758f612ac4e49fa7c6ab4be120",
-   "size": 30005
-  },
-  {
-   "path": "assets/sprites/guest_octopus.png",
-   "sha256": "a9c0e76d20c1b59c219fff5607636f3568c9c3709d98a0def49a2812dbb3a1a4",
-   "size": 35231
-  },
-  {
-   "path": "assets/sprites/guest_reaper.png",
-   "sha256": "4c2548e0aec48c61681e7e21170bc0444d9b05ae60cac407bd7e54cc14ddc0da",
-   "size": 33027
-  },
-  {
-   "path": "assets/sprites/guest_slime.png",
-   "sha256": "d797e0897027f5f7deb7e54f656e9cef07f40b1c7608fdf3e0bcb720ad5b5ffc",
-   "size": 24141
-  },
-  {
-   "path": "assets/sprites/guest_yeti.png",
-   "sha256": "ef95ef765deffe3ababd5b78ea807295c05106bf40554ce94192e27743608797",
-   "size": 28755
   },
   {
    "path": "assets/sprites/hero_jump_0.png",
@@ -644,8 +599,8 @@
   },
   {
    "path": "assets/sprites/meta.json",
-   "sha256": "eb67540192e35345a31b053ca6c2b436fdae20def642936d7719a8f40807b305",
-   "size": 17669
+   "sha256": "bbdcb437a59e6ff6388abe670e1f0627d1fa3a12d6147865ba82d9140416f306",
+   "size": 17711
   },
   {
    "path": "assets/sprites/mid_a00.png",
@@ -1098,6 +1053,51 @@
    "size": 3767
   },
   {
+   "path": "assets/sprites/pet_blue_dragon.png",
+   "sha256": "ea9d0ca30307ca0bede7643c8253202ae598007a7ed1d3c6bd73776f5c0c7951",
+   "size": 28627
+  },
+  {
+   "path": "assets/sprites/pet_forest.png",
+   "sha256": "8a7f0ead1c6da4829c859edc3b1e520158d5661efbc299995c4726ddb5dfc4de",
+   "size": 32776
+  },
+  {
+   "path": "assets/sprites/pet_fox.png",
+   "sha256": "2607d3013925d5206835da4baedce23ee34324657ebaf68622052ca986960518",
+   "size": 29895
+  },
+  {
+   "path": "assets/sprites/pet_panda.png",
+   "sha256": "ede34f8863fc3634bdd6e3313bd26c571d2066cf7ddc82580b5fe86249dbc1f7",
+   "size": 30137
+  },
+  {
+   "path": "assets/sprites/pet_phoenix.png",
+   "sha256": "0c721b9af5800b10dbcad2d1a279dfc80d74d7ecac28b0151533dd11a0c96471",
+   "size": 31200
+  },
+  {
+   "path": "assets/sprites/pet_pink_dragon.png",
+   "sha256": "180d4dccefa313047fd1c3bdd16bcc48964fae4cb65da3438dc66f486b0ce536",
+   "size": 31302
+  },
+  {
+   "path": "assets/sprites/pet_purple_dragon.png",
+   "sha256": "d40d4e42fe88d48e2d03ed155eab7db4f74474043e42193967bf1f0e8746efd2",
+   "size": 30019
+  },
+  {
+   "path": "assets/sprites/pet_sheep_angel.png",
+   "sha256": "ee21622c4db3db3619f91f87cc21e39c781c57959bece3b192339b21b8113ccd",
+   "size": 29397
+  },
+  {
+   "path": "assets/sprites/pet_slime_angel.png",
+   "sha256": "fa0410681b5d8f5a0adcebb946040f3257e0f52150fd8cf03336bf37474512f0",
+   "size": 28541
+  },
+  {
    "path": "assets/sprites/robot_attack_0.png",
    "sha256": "13baa94d50baa6d01de4f89ba2bc38a8f714f0e9e21ebb53d90bc1e5d9f199ac",
    "size": 21859
@@ -1349,8 +1349,8 @@
   },
   {
    "path": "app/defaults.py",
-   "sha256": "310be1da2a0635e2da26fa383d06ad457a6d00c4a27dc75313334dc04b683372",
-   "size": 3809
+   "sha256": "09e9a3995ff29b53bc4181924675425cf39e030d145acb88404401638e883aaa",
+   "size": 3791
   },
   {
    "path": "app/fx.py",
@@ -1359,8 +1359,8 @@
   },
   {
    "path": "app/game.py",
-   "sha256": "f530d62691ba10e8fb945a0e47123afa2ad51eb902ad7b16eb0c5120ed5cfa5d",
-   "size": 66902
+   "sha256": "156e611d77a07500a6b6343c950872f61956fe8a5e22b53851f1a99cbdb709dd",
+   "size": 68824
   },
   {
    "path": "app/ipc.py",
@@ -1374,8 +1374,8 @@
   },
   {
    "path": "app/panel.py",
-   "sha256": "e4dc66c509527eadb79c7bce117bce233c7e283b8f4cd1f69b862d26bb86af64",
-   "size": 23229
+   "sha256": "88aa1a546ff2ce1976ebf733c8dc14bf4a96468a12406e681b58364555c0c431",
+   "size": 23439
   },
   {
    "path": "app/tiktok_client.py",
@@ -1389,8 +1389,8 @@
   },
   {
    "path": "app/voice.py",
-   "sha256": "39a6176e8d2a52433c6fefe31806a3ee3749ab76b048bcd912dc85f46d03d577",
-   "size": 9801
+   "sha256": "7dee8fd1f823599dde1d6e041c029650d2337f056b7cc610d2318e4ce15ae51c",
+   "size": 9821
   },
   {
    "path": "music/HUONG_DAN.txt",

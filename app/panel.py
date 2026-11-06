@@ -28,13 +28,13 @@ SPEC = {
         ('dodge_fail_pct', '% né hụt chướng ngại', 'int', (0, 100)),
     ],
     'Tương tác': [
-        ('guest_on_join', 'Vào xem → thành quái khách', 'bool', None),
-        ('guest_on_comment', 'Bình luận → thành quái khách', 'bool', None),
-        ('guest_on_like', 'Thả tim → thành quái khách', 'bool', None),
-        ('guest_max', 'Quái khách tối đa cùng lúc', 'int', (1, 80)),
-        ('guest_life', 'Mỗi quái khách tồn tại (giây)', 'int', (5, 3600)),
+        ('guest_on_join', 'Vào xem → thành pet', 'bool', None),
+        ('guest_on_comment', 'Bình luận → thành pet', 'bool', None),
+        ('guest_on_like', 'Thả tim → thành pet', 'bool', None),
+        ('guest_max', 'Pet tối đa cùng lúc', 'int', (1, 80)),
+        ('guest_life', 'Mỗi pet tồn tại (giây)', 'int', (5, 3600)),
         ('guest_min_show', 'Hiện tối thiểu trước khi bị thay (giây)', 'int', (1, 120)),
-        ('guest_scale', 'Cỡ quái khách', 'float', (0.4, 1.6)),
+        ('guest_scale', 'Cỡ pet', 'float', (0.4, 1.6)),
         ('likes_per_buff', 'Số tim để buff', 'int', (1, 10000)),
         ('buff_mode', 'Chọn loại buff', 'choice', ['auto', 'random', 'cycle']),
         ('buff_damage_pct', 'Buff dame +% mỗi cấp', 'int', (1, 500)),
@@ -71,7 +71,7 @@ SPEC = {
         ('show_subtitle', 'Hiện phụ đề lời thoại', 'bool', None),
     ],
     'Hiển thị': [
-        ('window_size', 'Cửa sổ game (9:16)', 'choice', ['540x960', '720x1280', '1080x1920']),
+        ('window_size', 'Cửa sổ game (9:16)', 'choice', ['fit', '540x960', '720x1280', '1080x1920']),
         ('fps', 'FPS', 'choice', [30, 60]),
         ('title', 'Tiêu đề trên HUD', 'str', None),
         ('show_hud', 'Hiện HUD', 'bool', None),
@@ -88,7 +88,7 @@ SPEC = {
 from .voice import TURBO_VOICES, NANO_VOICES
 VOICE_LIST = TURBO_VOICES + [v for v in NANO_VOICES if v not in TURBO_VOICES]
 
-GUIDE = {'music_source': 'auto = thư mục của bạn nếu có bài, không thì 3 bài dựng sẵn; folder = chỉ thư mục của bạn;\nbuiltin = 3 bài dựng sẵn; classic = nhạc cũ của game; off = tắt',
+GUIDE = {'window_size': 'fit = lớn nhất vừa màn hình. Cửa sổ không được cao hơn màn hình, nếu không LIVE Studio capture bị lỗi;\nmàn 1080p dùng fit hoặc 540x960. Kéo giãn cửa sổ thoải mái, game luôn giữ 9:16.','music_source': 'auto = thư mục của bạn nếu có bài, không thì 3 bài dựng sẵn; folder = chỉ thư mục của bạn;\nbuiltin = 3 bài dựng sẵn; classic = nhạc cũ của game; off = tắt',
          'music_folder': 'Bỏ file mp3/ogg/wav/flac vào đây (mặc định thư mục music\\ cạnh app)','tts_mode': 'v3turbo hay hơn; v3nano nhẹ cho máy yếu (giọng riêng: Minh Quân, Ái Hân, Hữu Quân...)',
          'tts_precision': 'int8 nhanh ~1.6x nhưng CPU phải hỗ trợ VNNI, nếu méo tiếng thì để fp32',
          'tts_threads': 'Lần đầu chạy sẽ tải model từ HuggingFace; câu đã đọc được lưu ở voice_cache\\','buff_mode': 'auto = ưu tiên thứ Hero cần; random; cycle = lần lượt',
@@ -169,9 +169,9 @@ class Panel:
         sf = ttk.LabelFrame(f, text='Thống kê'); sf.pack(fill='x', padx=8, pady=4)
         self.stat_lbl = {}
         keys = [('fps', 'FPS'), ('hp', 'Máu Hero'), ('dist', 'Quãng đường (m)'), ('kills', 'Quái đã diệt'),
-                ('deaths', 'Số lần gục'), ('guests', 'Quái khách'), ('monsters', 'Quái trên màn'),
+                ('deaths', 'Số lần gục'), ('guests', 'Pet'), ('monsters', 'Quái trên màn'),
                 ('likes', 'Tổng tim'), ('coins', 'Tổng xu'), ('buff_q', 'Buff đang chờ'), ('helper_q', 'Trợ thủ đang chờ'),
-                ('voice', 'Giọng nói'), ('music', 'Đang phát')]
+                ('voice', 'Giọng nói'), ('music', 'Đang phát'), ('window', 'Cửa sổ game')]
         for i, (k, lbl) in enumerate(keys):
             ttk.Label(sf, text=lbl, style='S.TLabel').grid(row=i // 2, column=(i % 2) * 2, sticky='w', padx=6, pady=1)
             l = ttk.Label(sf, text='—'); l.grid(row=i // 2, column=(i % 2) * 2 + 1, sticky='w', padx=6)
@@ -193,7 +193,7 @@ class Panel:
 
         gf = ttk.Frame(f); gf.pack(fill='x', padx=8, pady=6)
         ttk.Button(gf, text='Chơi lại', command=lambda: self.ipc.send({'cmd': 'reset'})).pack(side='left', padx=3)
-        ttk.Button(gf, text='Xoá quái khách', command=lambda: self.ipc.send({'cmd': 'clear_guests'})).pack(side='left', padx=3)
+        ttk.Button(gf, text='Xoá pet', command=lambda: self.ipc.send({'cmd': 'clear_guests'})).pack(side='left', padx=3)
         ttk.Button(gf, text='Mở lại cửa sổ game', command=self.restart_game).pack(side='left', padx=3)
         ttk.Button(gf, text='Bài nhạc tiếp', command=lambda: self.ipc.send({'cmd': 'music_next'})).pack(side='left', padx=3)
         ttk.Label(f, text='Phím tắt trong cửa sổ game: G khách · H 100 tim · 1/2/3 buff · R robot · K hiệp sĩ\n'

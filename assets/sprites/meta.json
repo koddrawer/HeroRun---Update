@@ -723,93 +723,93 @@
  },
  "guests": [
   {
-   "img": "guest_dragon",
-   "kind": "dragon",
+   "img": "pet_pink_dragon",
+   "kind": "pink_dragon",
    "fly": 1,
    "hole": [
-    84.0,
-    59.0,
-    26.0
+    81.0,
+    62.5,
+    24.5
    ]
   },
   {
-   "img": "guest_yeti",
-   "kind": "yeti",
+   "img": "pet_blue_dragon",
+   "kind": "blue_dragon",
+   "fly": 1,
+   "hole": [
+    77.0,
+    60.5,
+    25.5
+   ]
+  },
+  {
+   "img": "pet_fox",
+   "kind": "fox",
    "fly": 0,
    "hole": [
-    81.5,
-    59.0,
+    58.0,
+    61.0,
+    22.0
+   ]
+  },
+  {
+   "img": "pet_panda",
+   "kind": "panda",
+   "fly": 0,
+   "hole": [
+    76.5,
+    66.5,
+    25.5
+   ]
+  },
+  {
+   "img": "pet_slime_angel",
+   "kind": "slime_angel",
+   "fly": 1,
+   "hole": [
+    69.5,
+    65.0,
     25.0
    ]
   },
   {
-   "img": "guest_golem",
-   "kind": "golem",
+   "img": "pet_forest",
+   "kind": "forest",
    "fly": 0,
    "hole": [
-    71.0,
-    59.5,
+    68.0,
+    64.5,
     25.5
    ]
   },
   {
-   "img": "guest_slime",
-   "kind": "slime",
-   "fly": 0,
-   "hole": [
-    62.5,
-    61.5,
-    26.5
-   ]
-  },
-  {
-   "img": "guest_reaper",
-   "kind": "reaper",
+   "img": "pet_purple_dragon",
+   "kind": "purple_dragon",
    "fly": 1,
    "hole": [
-    75.0,
-    63.5,
-    25.5
-   ]
-  },
-  {
-   "img": "guest_cyclops",
-   "kind": "cyclops",
-   "fly": 0,
-   "hole": [
-    67.5,
-    60.0,
-    27.0
-   ]
-  },
-  {
-   "img": "guest_angel",
-   "kind": "angel",
-   "fly": 1,
-   "hole": [
-    72.0,
-    57.5,
-    25.5
-   ]
-  },
-  {
-   "img": "guest_octopus",
-   "kind": "octopus",
-   "fly": 1,
-   "hole": [
-    72.0,
-    58.0,
-    27.0
-   ]
-  },
-  {
-   "img": "guest_bee",
-   "kind": "bee",
-   "fly": 1,
-   "hole": [
-    74.0,
+    77.0,
     58.5,
-    26.5
+    25.5
+   ]
+  },
+  {
+   "img": "pet_sheep_angel",
+   "kind": "sheep_angel",
+   "fly": 1,
+   "hole": [
+    72.5,
+    61.0,
+    25.0
+   ]
+  },
+  {
+   "img": "pet_phoenix",
+   "kind": "phoenix",
+   "fly": 1,
+   "hole": [
+    68.5,
+    59.0,
+    26.0
    ]
   }
  ],

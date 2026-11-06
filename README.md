@@ -13,7 +13,7 @@ Chạy riêng cửa sổ game: `python launcher.py --game`
 ## Luật chơi
 | Người xem | Kết quả |
 |---|---|
-| Vào xem / bình luận / thả tim | Thành **quái khách** (bay lơ lửng hoặc chạy dưới đất, có avatar + tên), không đánh nhân vật. Tối đa 10 con cùng lúc, mỗi con sống 60s; người mới vào khi đủ 10 thì con xuất hiện lâu nhất biến mất |
+| Vào xem / bình luận / thả tim | Thành **pet** (bay lơ lửng hoặc chạy dưới đất, có avatar + tên), không đánh nhân vật. Tối đa 10 con cùng lúc, mỗi con sống 60s; người mới vào khi đủ 10 thì con xuất hiện lâu nhất biến mất |
 | Thả đủ 100 tim (chỉnh được) | Avatar hiện trong khung buff (Dame đỏ / Máu xanh lá / Giáp xanh dương), camera zoom 1s, rồi bay vào người Hero |
 | Tặng 1 xu | **ROBOT** đáp xuống (camera zoom tới khi hạ cánh), ra chưởng đánh bay quái, rồi bay đi |
 | Tặng 5 xu | **HIỆP SĨ** xuất hiện (zoom tới khi đứng vững), chém đánh bay quái, rồi cháy biến mất |

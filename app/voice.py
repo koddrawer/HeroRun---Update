@@ -184,7 +184,7 @@ class Voice:
 
 # ---------------- kịch bản lời thoại ----------------
 GUIDE_LINES = [
-    'Chào mừng các bạn đến với Hero Run Live! Vào xem là bạn sẽ biến thành quái khách bay lượn quanh màn hình.',
+    'Chào mừng các bạn đến với Hero Run Live! Vào xem là bạn sẽ biến thành một chú pet dễ thương bay lượn quanh màn hình.',
     'Thả đủ {likes} tim, avatar của bạn sẽ bay vào người Hero để tăng sát thương, hồi máu hoặc thêm giáp!',
     'Tặng {robot} xu để gọi Robot đáp xuống, bắn chưởng quét sạch quái vật!',
     'Tặng {knight} xu để triệu hồi Hiệp sĩ hoàng kim, một nhát kiếm hạ gục tất cả!',
@@ -206,5 +206,5 @@ ROBOT_ATK = ['Chưởng năng lượng! Bắn!', 'Quét sạch mục tiêu!']
 ROBOT_OUT = ['Nhiệm vụ hoàn thành. Tạm biệt!']
 KNIGHT_IN = ['Hiệp sĩ của {name} đã tới!', 'Ta là hiệp sĩ của {name}, đến bảo vệ ngươi!']
 KNIGHT_ATK = ['Xem kiếm đây!', 'Kiếm quang trảm!']
-GREET = ['Chào {name}! Bạn đã thành quái khách rồi đó!', 'Chào mừng {name} đến chơi!']
+GREET = ['Chào {name}! Pet của bạn đã xuất hiện rồi đó!', 'Chào mừng {name} đến chơi!']
 KILLS = ['Hạ gục {n} quái rồi!']

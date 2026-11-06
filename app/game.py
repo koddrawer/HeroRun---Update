@@ -19,6 +19,17 @@ FAKE_NAMES = ['Bé Na', 'Anh Tú', 'Minh Khang', 'Linh Chi', 'Hoàng Long', 'Thu
               'Gia Bảo', 'Ngọc Hân', 'Quốc Huy', 'Bảo Ngọc', 'Tuấn Kiệt', 'Hồng Nhung', 'Văn Hùng', 'Khánh Vy']
 
 
+def set_dpi_aware():
+    """Windows: tắt co giãn DPI để cửa sổ đúng kích thước pixel (LIVE Studio capture chuẩn)"""
+    if sys.platform != 'win32': return
+    try:
+        import ctypes
+        try: ctypes.windll.shcore.SetProcessDpiAwareness(2)
+        except Exception: ctypes.windll.user32.SetProcessDPIAware()
+    except Exception:
+        pass
+
+
 def clamp(v, a, b): return a if v < a else b if v > b else v
 
 
@@ -783,7 +794,10 @@ class Helper:
 # =====================================================================
 class Game:
     def __init__(self):
+        self.logs = []
+        self.ipc = None
         self.cfg = C.load()
+        set_dpi_aware()
         os.environ.setdefault('SDL_VIDEO_CENTERED', '1')
         if self.cfg.get('window_x', -1) >= 0:
             os.environ['SDL_VIDEO_WINDOW_POS'] = f"{self.cfg['window_x']},{self.cfg['window_y']}"
@@ -793,8 +807,8 @@ class Game:
             pygame.mixer.init(44100, -16, 2, 1024)
         except Exception:
             pass
-        self.win_size = self.parse_size(self.cfg['window_size'])
-        self.window = pygame.display.set_mode(self.win_size)
+        self.window = None
+        self.open_window(self.cfg['window_size'])
         pygame.display.set_caption('Hero Run Live — 9:16')
         self.a = Assets()
         self.a.sfx_vol = self.cfg['sfx_volume']
@@ -806,7 +820,6 @@ class Game:
         self.screen = pygame.Surface((W, H)).convert()
         self.inbox = queue.Queue()
         self.ipc = Server(self.inbox)
-        self.logs = []
         self.tt = TikTokThread(self.inbox, self.log)
         self.voice = V.Voice(self)
         self.clock = pygame.time.Clock()
@@ -838,7 +851,7 @@ class Game:
         line = time.strftime('%H:%M:%S ') + str(msg)
         self.logs.append(line)
         try:
-            self.ipc.send({'type': 'log', 'msg': line})
+            if self.ipc: self.ipc.send({'type': 'log', 'msg': line})
         except Exception:
             pass
 
@@ -918,7 +931,7 @@ class Game:
                 'avatar': ev.get('avatar')}
 
     def ensure_guest(self, u, reason='join'):
-        """xếp người xem vào hàng chờ thành quái khách (spawn dần trong update)"""
+        """xếp người xem vào hàng chờ thành pet (spawn dần trong update)"""
         self.av.request(u['uid'], u.get('avatar'), u['name'])
         uid = u['uid']
         gst = self.guests.get(uid)
@@ -1058,9 +1071,8 @@ class Game:
             self.cfg = dict(old); self.cfg.update(msg.get('data', {}))
             self.a.sfx_vol = self.cfg['sfx_volume']
             ns = self.parse_size(self.cfg['window_size'])
-            if ns != self.win_size:
-                self.win_size = ns
-                self.window = pygame.display.set_mode(ns)
+            if self.cfg['window_size'] != old.get('window_size'):
+                self.open_window(self.cfg['window_size'])
             if self.cfg['hero_max_hp'] != old.get('hero_max_hp'):
                 self.hero.hp = min(self.hero.hp, self.cfg['hero_max_hp'])
             self.log('Đã áp dụng cài đặt')
@@ -1441,7 +1453,7 @@ class Game:
         y0 = 1112
         self.panel_box(s, (8, y0, W - 16, 160), 185)
         items = [
-            ('guest', 'Vào xem', 'thành QUÁI KHÁCH'),
+            ('guest', 'Vào xem', 'thành PET dễ thương'),
             ('heart', f"{cfg['likes_per_buff']} tim", 'BUFF cho Hero'),
             ('robot', f"{cfg['robot_coin']} xu", 'gọi ROBOT'),
             ('knight', f"{cfg['knight_coin']} xu", 'gọi HIỆP SĨ'),
@@ -1449,7 +1461,7 @@ class Game:
         for i, (ic, a, b) in enumerate(items):
             cx = 24 + (i % 2) * 346; cy = y0 + 14 + (i // 2) * 72
             if ic == 'guest':
-                img = self.a.get('guest_slime', 0.38)
+                img = self.a.get('pet_slime_angel', 0.38)
             elif ic == 'heart':
                 img = self.heart_img
             elif ic == 'robot':
@@ -1469,7 +1481,7 @@ class Game:
                        'guests': len(self.guests), 'monsters': alive, 'kills': self.stats['kills'],
                        'deaths': self.stats['deaths'], 'dist': int(self.dist), 'likes': self.stats['likes'],
                        'coins': self.stats['coins'], 'buff_q': len(self.buff_q), 'helper_q': len(self.helper_q),
-                       'hp': int(self.hero.hp), 'voice': self.voice.state, 'music': self.music.current or '—', 'version': C.version()})
+                       'hp': int(self.hero.hp), 'voice': self.voice.state, 'music': self.music.current or '—', 'window': '%dx%d' % tuple(self.win_size), 'version': C.version()})
 
     def keys(self, e):
         k = e.key
@@ -1507,11 +1519,40 @@ class Game:
         self.cam.apply(self.world, self.screen)
         self.draw_hud(self.screen)
 
+    def open_window(self, size_str):
+        """mở cửa sổ 9:16 vừa màn hình (không vượt quá vùng làm việc -> tránh lỗi capture)"""
+        want = (W, H) if str(size_str) == 'fit' else self.parse_size(size_str)
+        try:
+            dw, dh = pygame.display.get_desktop_sizes()[0]
+        except Exception:
+            dw, dh = 1920, 1080
+        max_h = dh - 90          # chừa thanh tiêu đề + taskbar
+        max_w = dw - 20
+        w, h = want
+        if str(size_str) == 'fit' or h > max_h or w > max_w:
+            k = min(max_h / H, max_w / W)
+            if str(size_str) != 'fit' and (h > max_h or w > max_w):
+                self.log(f'Màn hình {dw}x{dh} nhỏ hơn {w}x{h} → cửa sổ thu về vừa màn hình. '
+                         f'TikTok LIVE Studio vẫn tự phóng lên 1080x1920.')
+            h = int(H * k) // 2 * 2; w = int(h * 9 / 16) // 2 * 2
+        self.win_size = (w, h)
+        self.window = pygame.display.set_mode(self.win_size, pygame.RESIZABLE)
+        self.log(f'Cửa sổ game {w}x{h}')
+
     def present(self):
-        if self.win_size == (W, H):
-            self.window.blit(self.screen, (0, 0))
+        win = pygame.display.get_surface()
+        ww, wh = win.get_size()
+        if (ww, wh) == (W, H):
+            win.blit(self.screen, (0, 0))
         else:
-            pygame.transform.smoothscale(self.screen, self.win_size, self.window)
+            k = min(ww / W, wh / H)
+            sw, sh = max(1, int(W * k)), max(1, int(H * k))
+            ox, oy = (ww - sw) // 2, (wh - sh) // 2
+            if (ox or oy): win.fill((0, 0, 0))
+            if (sw, sh) == (W, H):
+                win.blit(self.screen, (ox, oy))
+            else:
+                win.blit(pygame.transform.smoothscale(self.screen, (sw, sh)), (ox, oy))
         pygame.display.flip()
 
     def run(self):
@@ -1522,6 +1563,7 @@ class Game:
             self.fps_v = self.clock.get_fps()
             for e in pygame.event.get():
                 if e.type == pygame.QUIT: self.running = False
+                elif e.type == pygame.VIDEORESIZE: self.win_size = (e.w, e.h)
                 elif e.type == pygame.KEYDOWN: self.keys(e)
             self.frame(dt)
             self.present()

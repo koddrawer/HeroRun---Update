@@ -31,8 +31,8 @@ DEFAULTS = {
 
     # ---- khách xem (guest monster) ----
     "guest_max": 10,                # tối đa cùng lúc; đầy thì người xuất hiện lâu nhất biến mất
-    "guest_life": 60,               # mỗi quái khách tồn tại (giây)
-    "guest_min_show": 8,            # quái khách hiện ít nhất N giây mới bị người mới thay
+    "guest_life": 60,               # mỗi pet tồn tại (giây)
+    "guest_min_show": 8,            # pet hiện ít nhất N giây mới bị người mới thay
     "guest_scale": 0.85,
     "guest_on_join": True,
     "guest_on_comment": True,
