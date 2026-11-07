@@ -37,8 +37,20 @@ jobs:
           name: HeroRunLive-win64
           path: HeroRunLive-win64.zip
           retention-days: 30
+      - name: Đọc phiên bản
+        id: ver
+        shell: pwsh
+        run: |
+          $v = (Get-Content version.json | ConvertFrom-Json).version
+          "v=$v" >> $env:GITHUB_OUTPUT
       - name: Release
-        if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: v${{ steps.ver.outputs.v }}
+          name: Hero Run Live v${{ steps.ver.outputs.v }} (Windows)
+          target_commitish: ${{ github.sha }}
+          make_latest: true
+          body: |
+            Tải **HeroRunLive-win64.zip** → giải nén → chạy **HeroRunLive.exe**.
+            Giữ nguyên thư mục `_internal`, `app`, `assets`, `music` cạnh file exe. App tự cập nhật nóng từ repo này.
           files: HeroRunLive-win64.zip
