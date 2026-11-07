@@ -73,6 +73,12 @@ class Music:
             except Exception as e:
                 self.g.log(f'Không phát được {os.path.basename(p)}: {e}')
         self.current = ''
+        if self.playlist != [CLASSIC]:
+            self.g.log('Chuyển sang nhạc nền dự phòng (wav)')
+            self.playlist = [CLASSIC]; self.idx = -1
+            self.next()
+        else:
+            self.playlist = []
 
     def update(self, vol):
         self.vol = vol

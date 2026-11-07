@@ -1,1 +1,1 @@
-{"version": "1.1.5", "notes": "Xuất camera ảo đúng 1080x1920 (cần OBS Studio); tự cài thư viện thiếu"}
+{"version": "1.1.6", "notes": "Sửa lỗi exe thiếu libpng16-16.dll (nạp DLL pygame + đọc ảnh dự phòng bằng Pillow)"}

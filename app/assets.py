@@ -3,6 +3,20 @@ import pygame
 from .config import ASSETS
 
 SPR = os.path.join(ASSETS, 'sprites')
+_use_pil = False
+
+
+def load_png(path):
+    """pygame.image.load; nếu thiếu DLL ảnh (libpng) thì đọc bằng Pillow"""
+    global _use_pil
+    if not _use_pil:
+        try:
+            return pygame.image.load(path).convert_alpha()
+        except Exception:
+            _use_pil = True
+    from PIL import Image
+    im = Image.open(path).convert('RGBA')
+    return pygame.image.frombytes(im.tobytes(), im.size, 'RGBA').convert_alpha()
 
 
 class Assets:
@@ -11,7 +25,7 @@ class Assets:
         self.img = {}
         for f in os.listdir(SPR):
             if f.endswith('.png'):
-                self.img[f[:-4]] = pygame.image.load(os.path.join(SPR, f)).convert_alpha()
+                self.img[f[:-4]] = load_png(os.path.join(SPR, f))
         self._scaled = {}
         self._flip = {}
         self.fonts = {}

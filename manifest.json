@@ -1,6 +1,6 @@
 {
- "version": "1.1.5",
- "notes": "Xuất camera ảo đúng 1080x1920 (cần OBS Studio); tự cài thư viện thiếu",
+ "version": "1.1.6",
+ "notes": "Sửa lỗi exe thiếu libpng16-16.dll (nạp DLL pygame + đọc ảnh dự phòng bằng Pillow)",
  "files": [
   {
    "path": "README.md",
@@ -9,8 +9,8 @@
   },
   {
    "path": "build_exe.bat",
-   "sha256": "238b08f6c7e658ee8fff8f737acfdf69ca654e737492667c70d47f8b0ed90712",
-   "size": 829
+   "sha256": "3e2f8b2ca36373f1c797ee2d025e3407cc3aac9e86a56e67cbb8dd36c7c43fd1",
+   "size": 843
   },
   {
    "path": "launcher.py",
@@ -29,8 +29,8 @@
   },
   {
    "path": "version.json",
-   "sha256": "e2e6febd4a9931e6578775da1996102bfc4a93be409479fa5924f4b02efd9dfc",
-   "size": 118
+   "sha256": "39e67303d3956418118e1545200441f82653848437e2d79975a525512a63540a",
+   "size": 132
   },
   {
    "path": "assets/music/track1_adventure.ogg",
@@ -1334,13 +1334,13 @@
   },
   {
    "path": "app/__init__.py",
-   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-   "size": 0
+   "sha256": "120d8364bca48801ab66086a8cd34f7bce1afe2c7795a717facc9979b6cfb82c",
+   "size": 1691
   },
   {
    "path": "app/assets.py",
-   "sha256": "319da1b187728408461a920f51dd8ca7aed0c125111339412225193c8eb8608a",
-   "size": 5184
+   "sha256": "d311fee8888f84553d86a445716fcfed2381fe20e00b62ca68a06682805aeba7",
+   "size": 5602
   },
   {
    "path": "app/config.py",
@@ -1369,8 +1369,8 @@
   },
   {
    "path": "app/music.py",
-   "sha256": "4f2c719e2515644ee9054edaad98b6a16aff84facf88a7844ab7e673264b98dd",
-   "size": 2988
+   "sha256": "fb027d22f8534bcd7b275f3d4f8c0d9e9fbbc43cf2c70329c591f5fc688af030",
+   "size": 3220
   },
   {
    "path": "app/panel.py",
