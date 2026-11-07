@@ -1,6 +1,6 @@
 {
- "version": "1.1.6",
- "notes": "Sửa lỗi exe thiếu libpng16-16.dll (nạp DLL pygame + đọc ảnh dự phòng bằng Pillow)",
+ "version": "1.1.7",
+ "notes": "Bản exe Windows + chế độ kiểm tra --smoke",
  "files": [
   {
    "path": "README.md",
@@ -9,13 +9,18 @@
   },
   {
    "path": "build_exe.bat",
-   "sha256": "3e2f8b2ca36373f1c797ee2d025e3407cc3aac9e86a56e67cbb8dd36c7c43fd1",
-   "size": 843
+   "sha256": "147fbc85aa358b7401f6cb75be0f8cb921d1145a159bb866485eb4421e89f106",
+   "size": 206
+  },
+  {
+   "path": "exe_deps.py",
+   "sha256": "3636cbc4572091a0c5a017b5510da6784dfbccd9e47ffb9c0a76d67658347a47",
+   "size": 1201
   },
   {
    "path": "launcher.py",
-   "sha256": "b9427a4e255926efbd785082f422eafe8900fbf857fd0e1a8b4fe937d5d045da",
-   "size": 940
+   "sha256": "0998dc0f41748e58794386911795ca80c5f98929f72bd3e9295140a931ea8f46",
+   "size": 2150
   },
   {
    "path": "requirements.txt",
@@ -29,8 +34,8 @@
   },
   {
    "path": "version.json",
-   "sha256": "39e67303d3956418118e1545200441f82653848437e2d79975a525512a63540a",
-   "size": 132
+   "sha256": "3247978ba69b4a3e661d7e2ccd37d31297ce40894ccb3824f4dfe4992aa5b9d4",
+   "size": 83
   },
   {
    "path": "assets/music/track1_adventure.ogg",

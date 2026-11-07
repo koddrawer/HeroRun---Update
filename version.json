@@ -1,1 +1,1 @@
-{"version": "1.1.6", "notes": "Sửa lỗi exe thiếu libpng16-16.dll (nạp DLL pygame + đọc ảnh dự phòng bằng Pillow)"}
+{"version": "1.1.7", "notes": "Bản exe Windows + chế độ kiểm tra --smoke"}

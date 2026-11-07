@@ -3,8 +3,8 @@
 import hashlib, json, os, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SKIP_DIRS = {'.git', '__pycache__', 'build', 'dist', 'tools', 'voice_cache'}
-SKIP_FILES = {'config.json', 'manifest.json', 'error.log', '.deps_ok', 'HeroRunLive.exe', 'HeroRunLive.spec'}
+SKIP_DIRS = {'.git', '.github', '__pycache__', 'build', 'dist', 'release', 'tools', 'voice_cache', '_internal'}
+SKIP_FILES = {'config.json', 'manifest.json', 'error.log', '.deps_ok', 'HeroRunLive.exe', 'HeroRunLive.spec', 'smoke.txt'}
 
 ver = sys.argv[1] if len(sys.argv) > 1 else json.load(open(os.path.join(ROOT, 'version.json')))['version']
 notes = sys.argv[2] if len(sys.argv) > 2 else ''
