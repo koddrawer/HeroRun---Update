@@ -1,11 +1,11 @@
 {
- "version": "1.1.7",
- "notes": "Bản exe Windows + chế độ kiểm tra --smoke",
+ "version": "1.2.0",
+ "notes": "Bỏ quái vật: donate bắn avatar 8-bit lên trời (càng nhiều xu càng to); pet hết giờ bị Hero bắn tan",
  "files": [
   {
    "path": "README.md",
-   "sha256": "5d86f218408e116d51a28558474818a8649eabb4082f55c341ad04900be8e76e",
-   "size": 4356
+   "sha256": "073f8ad351464eb5cbb9170a8dba478327e96bf9b813c568b6fd6b3d5efc755d",
+   "size": 4198
   },
   {
    "path": "build_exe.bat",
@@ -34,8 +34,8 @@
   },
   {
    "path": "version.json",
-   "sha256": "3247978ba69b4a3e661d7e2ccd37d31297ce40894ccb3824f4dfe4992aa5b9d4",
-   "size": 83
+   "sha256": "e2c865a7fff2b8e898c272a1d4dad77dd2b31e8c60b875235c7fa89d2c2aa5b9",
+   "size": 153
   },
   {
    "path": "assets/music/track1_adventure.ogg",
@@ -1354,8 +1354,8 @@
   },
   {
    "path": "app/defaults.py",
-   "sha256": "106d4f6f937697247bff5bce6f3f9a841f8f4cc0f5259946e592425e4fd04147",
-   "size": 4024
+   "sha256": "40f28b17783c4eabc657a12aeb161f96036267a29012720a7cab7657eb8dfa41",
+   "size": 3819
   },
   {
    "path": "app/fx.py",
@@ -1364,8 +1364,8 @@
   },
   {
    "path": "app/game.py",
-   "sha256": "010284637ee5404b654f0d10672217837b593522ea7a89d66a1d0665a8d58a46",
-   "size": 69003
+   "sha256": "48f94653001e165dd08bba360be1785946fd82f8956e7161d878c0ad401567e0",
+   "size": 61122
   },
   {
    "path": "app/ipc.py",
@@ -1379,8 +1379,8 @@
   },
   {
    "path": "app/panel.py",
-   "sha256": "b6c02d9bb0eca981ced838c51c66cebe2236e4f180f679ae6e16e3be98efc184",
-   "size": 25333
+   "sha256": "ea20ed00f6ed7091930e6ee6762bc5a784683daf78046298f827f586a4630fe2",
+   "size": 23899
   },
   {
    "path": "app/tiktok_client.py",
@@ -1399,8 +1399,8 @@
   },
   {
    "path": "app/voice.py",
-   "sha256": "7dee8fd1f823599dde1d6e041c029650d2337f056b7cc610d2318e4ce15ae51c",
-   "size": 9821
+   "sha256": "2ac5975ca988bde41f8c566e970eff84546639147a727662ef3c0a3ee7a7dc34",
+   "size": 10168
   },
   {
    "path": "music/HUONG_DAN.txt",

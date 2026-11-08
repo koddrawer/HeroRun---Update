@@ -185,11 +185,14 @@ class Voice:
 # ---------------- kịch bản lời thoại ----------------
 GUIDE_LINES = [
     'Chào mừng các bạn đến với Hero Run Live! Vào xem là bạn sẽ biến thành một chú pet dễ thương bay lượn quanh màn hình.',
-    'Thả đủ {likes} tim, avatar của bạn sẽ bay vào người Hero để tăng sát thương, hồi máu hoặc thêm giáp!',
-    'Tặng {robot} xu để gọi Robot đáp xuống, bắn chưởng quét sạch quái vật!',
-    'Tặng {knight} xu để triệu hồi Hiệp sĩ hoàng kim, một nhát kiếm hạ gục tất cả!',
-    'Hero sắp mệt rồi, cả nhà thả tim tiếp sức cho Hero nhé!',
+    'Thả đủ {likes} tim để tiếp sức cho Hero, avatar của bạn sẽ bay vào người Hero!',
+    'Tặng quà bất kỳ, Hero sẽ bắn tia sáng vẽ avatar của bạn lên bầu trời!',
+    'Tặng càng nhiều xu, avatar 8-bit của bạn trên trời càng to!',
+    'Pet chỉ ở lại {life} giây thôi, hết giờ là bị Hero bắn tan đó nha! Vào lại phòng để có pet mới.',
 ]
+DONATE_THANKS = ['Cảm ơn {name} đã tặng {n} xu! Vẽ avatar lên trời nào!', 'Wow, {name} tặng {n} xu! Bắn lên trời thôi!',
+                 'Cảm ơn {name}! Avatar của bạn sắp hiện trên bầu trời!']
+PET_POP = ['Hết giờ rồi! Tạm biệt {name}!', 'Bùm! Tạm biệt {name}, vào lại chơi tiếp nhé!']
 HERO_JUMP = ['Hây! Nhảy qua nào!', 'Bật cao lên!', 'Hụp! Qua rồi!']
 HERO_SLIDE = ['Cúi xuống! Trượt qua!', 'Trượt nào!', 'Suýt nữa thì trúng!']
 HERO_HURT = ['Ui da! Đau quá!', 'Á! Trúng rồi!']
@@ -197,9 +200,9 @@ HERO_DIE = ['Á... mình sẽ quay lại ngay!', 'Gục mất rồi... đợi m�
 HERO_REVIVE = ['Hồi sinh rồi! Chạy tiếp thôi!', 'Mình trở lại rồi đây!']
 HERO_LOW = ['Sắp hết máu rồi, thả tim cứu mình với!', 'Máu yếu quá, cả nhà tiếp sức cho mình nhé!']
 HERO_BUFF = {
-    'damage': ['Cảm ơn {name}! Sức mạnh tăng vọt rồi!', 'Cảm ơn {name}! Súng mạnh hơn rồi!'],
-    'heal': ['Cảm ơn {name}! Mình hồi máu rồi!', 'Cảm ơn {name}, khỏe lại rồi!'],
-    'armor': ['Cảm ơn {name}! Có giáp rồi, không sợ nữa!', 'Giáp của {name} chắc quá!'],
+    'damage': ['Cảm ơn {name}! Sức mạnh tăng vọt rồi!', 'Cảm ơn {name} đã tiếp sức cho mình!'],
+    'heal': ['Cảm ơn {name}! Năng lượng tràn trề!', 'Cảm ơn {name}, mình chạy khỏe hơn rồi!'],
+    'armor': ['Cảm ơn {name}! Có khiên sáng rồi!', 'Khiên của {name} đẹp quá!'],
 }
 ROBOT_IN = ['Robot của {name} xuất kích!', '{name} đã gọi Robot! Đang hạ cánh!']
 ROBOT_ATK = ['Chưởng năng lượng! Bắn!', 'Quét sạch mục tiêu!']

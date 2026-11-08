@@ -13,14 +13,13 @@ Chạy riêng cửa sổ game: `python launcher.py --game`
 ## Luật chơi
 | Người xem | Kết quả |
 |---|---|
-| Vào xem / bình luận / thả tim | Thành **pet** (bay lơ lửng hoặc chạy dưới đất, có avatar + tên), không đánh nhân vật. Tối đa 10 con cùng lúc, mỗi con sống 60s; người mới vào khi đủ 10 thì con xuất hiện lâu nhất biến mất |
-| Thả đủ 100 tim (chỉnh được) | Avatar hiện trong khung buff (Dame đỏ / Máu xanh lá / Giáp xanh dương), camera zoom 1s, rồi bay vào người Hero |
-| Tặng 1 xu | **ROBOT** đáp xuống (camera zoom tới khi hạ cánh), ra chưởng đánh bay quái, rồi bay đi |
-| Tặng 5 xu | **HIỆP SĨ** xuất hiện (zoom tới khi đứng vững), chém đánh bay quái, rồi cháy biến mất |
+| Vào xem / bình luận / thả tim | Thành **pet** dễ thương (bay hoặc chạy dưới đất, có avatar + tên). Tối đa 10 pet cùng lúc, mỗi pet ở 60s; hết giờ (hoặc khi đủ 10 mà có người mới) pet bay ra trước mặt Hero và **bị bắn tan** thành hạt pixel |
+| Thả đủ 100 tim | Avatar hiện trong khung, camera zoom 1s rồi bay vào người Hero → Hero được **tiếp sức** (hào quang + tia laser đổi màu) |
+| Tặng quà bất kỳ | Hero **bắn tia sáng lên trời, ghép thành avatar 8-bit** của người tặng + tên + số xu. **Tặng càng nhiều xu, avatar càng to và càng chi tiết** (1 xu ≈ 110px → 1000 xu ≈ 480px) |
 
-Hero tự chạy + bắn (bắn thẳng quái đất, bắn chéo quái bay), tự **nhảy** qua chướng ngại dưới đất và **trượt** dưới chướng ngại treo/ngang đầu. Hết máu → gục → chạy lại vào màn hình hồi sinh, chạy tiếp.
+Hero chỉ chạy tới (không còn quái vật). Chướng ngại vật nhảy/trượt có thể bật lại ở tab *Gameplay*.
 
-Phím tắt trong cửa sổ game: `G` khách · `H` 100 tim · `1/2/3` buff · `R` robot · `K` hiệp sĩ · `M` quái · `T` chướng ngại · `X` -20 máu · `D` gục · `F5` chơi lại.
+Phím tắt trong cửa sổ game: `G` khách · `H` 100 tim · `J` vài chục tim · `1/2/3/4` tặng 1/10/100/1000 xu · `E` pet hết giờ · `T` chướng ngại · `N` bài nhạc tiếp · `F5` chơi lại.
 
 ## Xuất đúng 1080x1920 (màn hình nhỏ hơn vẫn được)
 Cửa sổ game không thể cao hơn màn hình (màn 1080p → tối đa ~556x990). Muốn phát nét 1080x1920:
@@ -30,7 +29,7 @@ Cửa sổ game không thể cao hơn màn hình (màn 1080p → tối đa ~556x
 
 ## Lồng tiếng (VieNeu-TTS)
 - Chạy trên máy (CPU, ONNX) — `run.bat` tự cài `vieneu`. Lần đầu bật game sẽ tải model từ HuggingFace (vài trăm MB), sau đó dùng offline.
-- 4 vai: **người dẫn** (đọc hướng dẫn chơi mỗi 45s + chào người mới), **Hero** (cảm ơn người buff, kêu khi nhảy/trượt/trúng đòn/gục/hồi sinh, xin tim khi yếu máu), **Robot** (giọng méo kiểu robot), **Hiệp sĩ**. Mỗi vai chọn giọng riêng ở tab *Giọng nói*, có nút *Nghe thử*.
+- 2 vai: **người dẫn** (đọc hướng dẫn chơi mỗi 45s, chào người mới, nhắc người sắp đủ tim) và **Hero** (cảm ơn người tặng quà / tiếp sức, chào tạm biệt pet bị bắn). Mỗi vai chọn giọng riêng ở tab *Giọng nói*, có nút *Nghe thử*.
 - Câu đã đọc được lưu ở `voice_cache\` → lần sau phát ngay. Câu có tên người xem sinh lúc chạy (bỏ emoji/ký hiệu trong tên).
 - Có phụ đề lời thoại trên màn hình. Nhạc nền tự nhỏ lại khi nhân vật nói.
 - Máy yếu: chuyển *Model* sang `v3nano` hoặc giảm *Số luồng CPU cho TTS*.

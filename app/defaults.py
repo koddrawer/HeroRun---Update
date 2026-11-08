@@ -15,27 +15,15 @@ DEFAULTS = {
     "vcam_backend": "",             # "" = tự chọn | obs | unitycapture
 
     # ---- nhân vật ----
-    "scroll_speed": 230,           # px/giây
-    "hero_max_hp": 100,
-    "hero_damage": 10,
-    "fire_interval": 0.28,          # giây giữa 2 phát bắn
-    "dodge_fail_pct": 8,            # % né chướng ngại thất bại
-    "obstacle_damage": 12,
-    "respawn_time": 1.6,
+    "scroll_speed": 230,            # px/giây
+    "fire_interval": 0.28,          # giây giữa 2 phát bắn pet hết giờ
+    "obstacles_enabled": False,     # chướng ngại vật (nhảy/trượt) — mặc định tắt: Hero chỉ chạy tới
+    "obstacle_interval": 4.5,
+    "dodge_fail_pct": 8,
 
-    # ---- quái mặc định ----
-    "monster_interval": 2.4,        # giây giữa các đợt quái
-    "monster_max": 6,
-    "monster_hp": 30,
-    "monster_damage": 6,
-    "monster_fire_interval": 2.2,
-    "obstacle_interval": 4.5,       # giây giữa chướng ngại vật
-    "difficulty_per_level": 8,      # % máu quái tăng mỗi cấp
-    "meters_per_level": 300,
-
-    # ---- khách xem (guest monster) ----
-    "guest_max": 10,                # tối đa cùng lúc; đầy thì người xuất hiện lâu nhất biến mất
-    "guest_life": 60,               # mỗi pet tồn tại (giây)
+    # ---- người xem = pet ----
+    "guest_max": 10,                # tối đa cùng lúc; đầy thì pet xuất hiện lâu nhất bị bắn
+    "guest_life": 60,               # mỗi pet tồn tại (giây), hết giờ bị Hero bắn tan
     "guest_min_show": 8,            # pet hiện ít nhất N giây mới bị người mới thay
     "guest_scale": 0.85,
     "guest_on_join": True,
@@ -44,25 +32,21 @@ DEFAULTS = {
 
     # ---- thả tim ----
     "likes_per_buff": 100,
-    "buff_mode": "auto",            # auto | random | cycle
-    "buff_damage_pct": 50,          # +% sát thương mỗi cấp
-    "buff_damage_time": 20,         # giây
-    "buff_damage_max": 4,
-    "buff_heal": 35,
-    "buff_armor": 30,
-    "armor_max": 100,
+    "buff_mode": "random",          # random | cycle (kiểu hào quang tiếp sức)
+    "power_time": 8,                # giây Hero được tiếp sức
     "zoom_like_time": 1.0,
     "show_hearts": True,
     "show_top3": True,              # bảng TOP 3 sắp đủ tim
     "top3_window": 300,             # chỉ tính người thả tim trong N giây gần nhất
     "tts_top_nudge": True,          # người dẫn nhắc người sắp đủ tim
 
-    # ---- donate ----
-    "robot_coin": 1,
-    "knight_coin": 5,
-    "gift_rule": "unit",            # unit = theo giá 1 món | total = theo tổng xu
-    "helper_cap": 5,                # tối đa trợ thủ cho 1 lần tặng
-    "helper_queue_max": 15,
+    # ---- donate: avatar 8-bit trên trời ----
+    "art_min_px": 110,              # cỡ avatar khi tặng ít (1 xu)
+    "art_max_px": 480,              # cỡ avatar tối đa
+    "art_coins_max": 1000,          # số xu để đạt cỡ tối đa (tăng theo log)
+    "art_max_grid": 36,             # số ô pixel tối đa mỗi cạnh (avatar to = nhiều chi tiết hơn)
+    "art_show_time": 5,             # giây hiển thị (+ tới 3s cho quà lớn)
+    "art_queue_max": 20,
     "zoom_scale": 1.6,
 
     # ---- âm thanh / giao diện ----

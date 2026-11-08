@@ -12,19 +12,9 @@ BG = '#17131f'; BG2 = '#231d30'; FG = '#f1e9ff'; ACC = '#ffd45a'; ACC2 = '#7cc6f
 SPEC = {
     'Gameplay': [
         ('scroll_speed', 'Tốc độ chạy (px/s)', 'int', (80, 500)),
-        ('hero_max_hp', 'Máu tối đa Hero', 'int', (10, 1000)),
-        ('hero_damage', 'Sát thương mỗi phát', 'int', (1, 500)),
-        ('fire_interval', 'Giãn cách bắn (giây)', 'float', (0.05, 2)),
-        ('respawn_time', 'Thời gian chờ hồi sinh (giây)', 'float', (0.5, 10)),
-        ('monster_interval', 'Giãn cách đợt quái (giây)', 'float', (0.5, 20)),
-        ('monster_max', 'Số quái tối đa trên màn', 'int', (1, 20)),
-        ('monster_hp', 'Máu quái (cấp 1)', 'int', (1, 2000)),
-        ('monster_damage', 'Sát thương quái', 'int', (0, 200)),
-        ('monster_fire_interval', 'Quái bắn mỗi (giây)', 'float', (0.3, 10)),
-        ('difficulty_per_level', 'Máu quái +% mỗi cấp', 'int', (0, 100)),
-        ('meters_per_level', 'Số mét mỗi cấp', 'int', (50, 5000)),
+        ('fire_interval', 'Giãn cách bắn pet hết giờ (giây)', 'float', (0.05, 2)),
+        ('obstacles_enabled', 'Bật chướng ngại vật (nhảy/trượt)', 'bool', None),
         ('obstacle_interval', 'Giãn cách chướng ngại (giây)', 'float', (1, 30)),
-        ('obstacle_damage', 'Sát thương chướng ngại', 'int', (0, 200)),
         ('dodge_fail_pct', '% né hụt chướng ngại', 'int', (0, 100)),
     ],
     'Tương tác': [
@@ -32,26 +22,21 @@ SPEC = {
         ('guest_on_comment', 'Bình luận → thành pet', 'bool', None),
         ('guest_on_like', 'Thả tim → thành pet', 'bool', None),
         ('guest_max', 'Pet tối đa cùng lúc', 'int', (1, 80)),
-        ('guest_life', 'Mỗi pet tồn tại (giây)', 'int', (5, 3600)),
+        ('guest_life', 'Mỗi pet tồn tại (giây) — hết giờ bị bắn tan', 'int', (5, 3600)),
         ('guest_min_show', 'Hiện tối thiểu trước khi bị thay (giây)', 'int', (1, 120)),
         ('guest_scale', 'Cỡ pet', 'float', (0.4, 1.6)),
-        ('likes_per_buff', 'Số tim để buff', 'int', (1, 10000)),
-        ('buff_mode', 'Chọn loại buff', 'choice', ['auto', 'random', 'cycle']),
-        ('buff_damage_pct', 'Buff dame +% mỗi cấp', 'int', (1, 500)),
-        ('buff_damage_time', 'Buff dame kéo dài (giây)', 'int', (1, 600)),
-        ('buff_damage_max', 'Buff dame cấp tối đa', 'int', (1, 10)),
-        ('buff_heal', 'Buff hồi máu (HP)', 'int', (1, 1000)),
-        ('buff_armor', 'Buff giáp (điểm)', 'int', (1, 1000)),
-        ('armor_max', 'Giáp tối đa', 'int', (1, 2000)),
+        ('likes_per_buff', 'Số tim để tiếp sức Hero', 'int', (1, 10000)),
+        ('buff_mode', 'Màu hào quang tiếp sức', 'choice', ['random', 'cycle']),
+        ('power_time', 'Thời gian tiếp sức (giây)', 'int', (1, 120)),
         ('zoom_like_time', 'Zoom khi avatar tim xuất hiện (giây)', 'float', (0, 5)),
         ('show_top3', 'Hiện bảng TOP 3 sắp đủ tim', 'bool', None),
         ('top3_window', 'TOP 3 chỉ tính người thả tim trong (giây)', 'int', (10, 3600)),
         ('tts_top_nudge', 'Người dẫn nhắc người sắp đủ tim (≥80%)', 'bool', None),
-        ('robot_coin', 'Số xu gọi ROBOT', 'int', (1, 100000)),
-        ('knight_coin', 'Số xu gọi HIỆP SĨ', 'int', (1, 100000)),
-        ('gift_rule', 'Cách tính quà', 'choice', ['unit', 'total']),
-        ('helper_cap', 'Tối đa trợ thủ / 1 lần tặng', 'int', (1, 100)),
-        ('helper_queue_max', 'Hàng chờ trợ thủ tối đa', 'int', (1, 200)),
+        ('art_min_px', 'Avatar donate: cỡ nhỏ nhất (px)', 'int', (40, 700)),
+        ('art_max_px', 'Avatar donate: cỡ lớn nhất (px)', 'int', (60, 700)),
+        ('art_coins_max', 'Số xu để avatar to nhất', 'int', (2, 1000000)),
+        ('art_max_grid', 'Độ chi tiết tối đa (ô pixel mỗi cạnh)', 'int', (12, 64)),
+        ('art_show_time', 'Avatar hiện trên trời (giây)', 'float', (1, 60)),
         ('zoom_scale', 'Độ zoom camera', 'float', (1, 3)),
     ],
     'Giọng nói': [
@@ -61,13 +46,10 @@ SPEC = {
         ('tts_threads', 'Số luồng CPU cho TTS', 'int', (1, 16)),
         ('tts_voice_narrator', 'Giọng người dẫn (hướng dẫn chơi)', 'voice', None),
         ('tts_voice_hero', 'Giọng Hero', 'voice', None),
-        ('tts_voice_robot', 'Giọng Robot', 'voice', None),
-        ('tts_voice_knight', 'Giọng Hiệp sĩ', 'voice', None),
-        ('tts_robot_fx', 'Méo tiếng kiểu robot', 'bool', None),
         ('voice_volume', 'Âm lượng giọng', 'float', (0, 1)),
         ('tts_guide_interval', 'Đọc hướng dẫn mỗi (giây, 0 = tắt)', 'int', (0, 3600)),
         ('tts_greet', 'Chào người mới vào', 'bool', None),
-        ('tts_hero_chatter', 'Hero nói khi nhảy/trượt/trúng đòn', 'bool', None),
+        ('tts_hero_chatter', 'Hero nói khi bắn pet / nhảy / trượt', 'bool', None),
         ('show_subtitle', 'Hiện phụ đề lời thoại', 'bool', None),
     ],
     'Hiển thị': [
@@ -172,10 +154,10 @@ class Panel:
 
         sf = ttk.LabelFrame(f, text='Thống kê'); sf.pack(fill='x', padx=8, pady=4)
         self.stat_lbl = {}
-        keys = [('fps', 'FPS'), ('hp', 'Máu Hero'), ('dist', 'Quãng đường (m)'), ('kills', 'Quái đã diệt'),
-                ('deaths', 'Số lần gục'), ('guests', 'Pet'), ('monsters', 'Quái trên màn'),
-                ('likes', 'Tổng tim'), ('coins', 'Tổng xu'), ('buff_q', 'Buff đang chờ'), ('helper_q', 'Trợ thủ đang chờ'),
-                ('voice', 'Giọng nói'), ('music', 'Đang phát'), ('window', 'Cửa sổ game'), ('vcam', 'Camera ảo')]
+        keys = [('fps', 'FPS'), ('dist', 'Quãng đường (m)'), ('guests', 'Pet đang hiện'), ('popped', 'Pet đã bắn tan'),
+                ('likes', 'Tổng tim'), ('coins', 'Tổng xu'), ('gifts', 'Lượt tặng'), ('art_q', 'Avatar đang/chờ vẽ'),
+                ('buff_q', 'Tiếp sức đang chờ'), ('voice', 'Giọng nói'), ('music', 'Đang phát'), ('window', 'Cửa sổ game'),
+                ('vcam', 'Camera ảo')]
         for i, (k, lbl) in enumerate(keys):
             ttk.Label(sf, text=lbl, style='S.TLabel').grid(row=i // 2, column=(i % 2) * 2, sticky='w', padx=6, pady=1)
             l = ttk.Label(sf, text='—'); l.grid(row=i // 2, column=(i % 2) * 2 + 1, sticky='w', padx=6)
@@ -184,12 +166,10 @@ class Panel:
 
         tf = ttk.LabelFrame(f, text='Thử nghiệm (không cần LIVE)'); tf.pack(fill='x', padx=8, pady=6)
         tests = [('+ Khách vào', {'kind': 'guest'}), ('+100 tim', {'kind': 'like', 'value': 100}),
-                 ('+15 tim', {'kind': 'like', 'value': 15}), ('+40 tim', {'kind': 'like', 'value': 40}),
-                 ('Buff DAME', {'kind': 'buff', 'value': 'damage'}), ('Buff MÁU', {'kind': 'buff', 'value': 'heal'}),
-                 ('Buff GIÁP', {'kind': 'buff', 'value': 'armor'}), ('Tặng 1 xu', {'kind': 'gift', 'value': 1}),
-                 ('Tặng 5 xu', {'kind': 'gift', 'value': 5}), ('Thêm quái', {'kind': 'monster'}),
-                 ('Chướng ngại', {'kind': 'trap'}), ('Hero -20 máu', {'kind': 'hurt', 'value': 20}),
-                 ('Hero gục', {'kind': 'kill'})]
+                 ('+15 tim', {'kind': 'like', 'value': 15}), ('Tặng 1 xu', {'kind': 'gift', 'value': 1}),
+                 ('Tặng 10 xu', {'kind': 'gift', 'value': 10}), ('Tặng 100 xu', {'kind': 'gift', 'value': 100}),
+                 ('Tặng 1000 xu', {'kind': 'gift', 'value': 1000}), ('Pet hết giờ', {'kind': 'expire'}),
+                 ('Chướng ngại', {'kind': 'trap'})]
         for i, (t, d) in enumerate(tests):
             ttk.Button(tf, text=t, command=lambda d=d: self.ipc.send(dict(cmd='test', **d))).grid(
                 row=i // 3, column=i % 3, sticky='we', padx=3, pady=3)
@@ -200,8 +180,8 @@ class Panel:
         ttk.Button(gf, text='Xoá pet', command=lambda: self.ipc.send({'cmd': 'clear_guests'})).pack(side='left', padx=3)
         ttk.Button(gf, text='Mở lại cửa sổ game', command=self.restart_game).pack(side='left', padx=3)
         ttk.Button(gf, text='Bài nhạc tiếp', command=lambda: self.ipc.send({'cmd': 'music_next'})).pack(side='left', padx=3)
-        ttk.Label(f, text='Phím tắt trong cửa sổ game: G khách · H 100 tim · 1/2/3 buff · R robot · K hiệp sĩ\n'
-                         'J vài chục tim · M quái · T chướng ngại · X -20 máu · D gục · N bài nhạc tiếp · F5 chơi lại', style='S.TLabel').pack(anchor='w', padx=12)
+        ttk.Label(f, text='Phím tắt trong cửa sổ game: G khách · H 100 tim · J vài chục tim · 1/2/3/4 tặng 1/10/100/1000 xu\n'
+                         'E pet hết giờ · T chướng ngại · N bài nhạc tiếp · F5 chơi lại', style='S.TLabel').pack(anchor='w', padx=12)
         return f
 
     def tab_form(self, nb, items):
