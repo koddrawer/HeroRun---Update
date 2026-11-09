@@ -5,6 +5,7 @@ from tkinter import ttk, messagebox
 from . import config as C
 from .ipc import Client
 from . import updater
+from . import music as M
 
 BG = '#17131f'; BG2 = '#231d30'; FG = '#f1e9ff'; ACC = '#ffd45a'; ACC2 = '#7cc6ff'
 
@@ -35,7 +36,9 @@ SPEC = {
         ('art_min_px', 'Avatar donate: cỡ nhỏ nhất (px)', 'int', (40, 700)),
         ('art_max_px', 'Avatar donate: cỡ lớn nhất (px)', 'int', (60, 700)),
         ('art_coins_max', 'Số xu để avatar to nhất', 'int', (2, 1000000)),
-        ('art_max_grid', 'Độ chi tiết tối đa (ô pixel mỗi cạnh)', 'int', (12, 64)),
+        ('art_speed', 'TỐC ĐỘ VẼ avatar (x1 bình thường, 2 = nhanh gấp đôi, 0.5 = chậm)', 'float', (0.1, 10)),
+        ('art_grid_min', 'Độ phân giải avatar nhỏ (ô pixel mỗi cạnh)', 'int', (8, 128)),
+        ('art_grid_max', 'Độ phân giải avatar lớn (ô pixel mỗi cạnh)', 'int', (8, 128)),
         ('art_show_time', 'Avatar hiện trên trời (giây)', 'float', (1, 60)),
         ('zoom_scale', 'Độ zoom camera', 'float', (1, 3)),
     ],
@@ -62,10 +65,6 @@ SPEC = {
         ('show_hud', 'Hiện HUD', 'bool', None),
         ('show_guide', 'Hiện bảng hướng dẫn', 'bool', None),
         ('show_hearts', 'Hiện tim bay', 'bool', None),
-        ('music_volume', 'Âm lượng nhạc', 'float', (0, 1)),
-        ('music_source', 'Nguồn nhạc nền', 'choice', ['auto', 'folder', 'builtin', 'classic', 'off']),
-        ('music_folder', 'Thư mục nhạc của bạn', 'folder', None),
-        ('music_shuffle', 'Phát ngẫu nhiên', 'bool', None),
         ('sfx_volume', 'Âm lượng hiệu ứng', 'float', (0, 1)),
     ],
 }
@@ -129,6 +128,7 @@ class Panel:
         nb.add(self.tab_control(nb), text='Điều khiển')
         for name, items in SPEC.items():
             nb.add(self.tab_form(nb, items), text=name)
+        nb.add(self.tab_music(nb), text='Nhạc nền')
         nb.add(self.tab_update(nb), text='Cập nhật')
         # log
         lf = ttk.LabelFrame(self.root, text='Nhật ký'); lf.pack(fill='x', padx=8, pady=(0, 8))
@@ -179,7 +179,6 @@ class Panel:
         ttk.Button(gf, text='Chơi lại', command=lambda: self.ipc.send({'cmd': 'reset'})).pack(side='left', padx=3)
         ttk.Button(gf, text='Xoá pet', command=lambda: self.ipc.send({'cmd': 'clear_guests'})).pack(side='left', padx=3)
         ttk.Button(gf, text='Mở lại cửa sổ game', command=self.restart_game).pack(side='left', padx=3)
-        ttk.Button(gf, text='Bài nhạc tiếp', command=lambda: self.ipc.send({'cmd': 'music_next'})).pack(side='left', padx=3)
         ttk.Label(f, text='Phím tắt trong cửa sổ game: G khách · H 100 tim · J vài chục tim · 1/2/3/4 tặng 1/10/100/1000 xu\n'
                          'E pet hết giờ · T chướng ngại · N bài nhạc tiếp · F5 chơi lại', style='S.TLabel').pack(anchor='w', padx=12)
         return f
@@ -231,6 +230,122 @@ class Panel:
             row=len(items) * 2 + 1, column=0, columnspan=2, pady=12)
         return outer
 
+    SRC_LABEL = [('all', 'Tất cả (dựng sẵn + nhạc của bạn)'), ('builtin', 'Chỉ nhạc dựng sẵn'),
+                 ('folder', 'Chỉ nhạc của bạn'), ('classic', 'Nhạc cũ của game'), ('off', 'Tắt nhạc')]
+
+    def tab_music(self, nb):
+        f = ttk.Frame(nb)
+        top = ttk.Frame(f); top.pack(fill='x', padx=10, pady=(10, 4))
+        ttk.Label(top, text='Đang phát:', style='S.TLabel').pack(side='left')
+        self.l_music = ttk.Label(top, text='—', style='H.TLabel'); self.l_music.pack(side='left', padx=6)
+
+        bf = ttk.Frame(f); bf.pack(fill='x', padx=10, pady=4)
+        ttk.Button(bf, text='⏮ Bài trước', command=lambda: self.ipc.send({'cmd': 'music_prev'})).pack(side='left', padx=2)
+        ttk.Button(bf, text='⏯ Dừng / Phát', command=lambda: self.ipc.send({'cmd': 'music_pause'})).pack(side='left', padx=2)
+        ttk.Button(bf, text='⏭ Bài tiếp', command=lambda: self.ipc.send({'cmd': 'music_next'})).pack(side='left', padx=2)
+
+        vf = ttk.Frame(f); vf.pack(fill='x', padx=10, pady=4)
+        ttk.Label(vf, text='Âm lượng').pack(side='left')
+        v_vol = tk.StringVar(value=str(self.cfg.get('music_volume', 0.35)))
+        self.vars['music_volume'] = (v_vol, 'float', (0, 1))
+        def on_vol(val):
+            try: self.ipc.send({'cmd': 'music_volume', 'value': float(val)})
+            except Exception: pass
+        tk.Scale(vf, from_=0, to=1, resolution=0.01, orient='horizontal', variable=v_vol, command=on_vol, length=260,
+                 bg=BG, fg=FG, troughcolor=BG2, highlightthickness=0, showvalue=False).pack(side='left', padx=8)
+
+        sf = ttk.Frame(f); sf.pack(fill='x', padx=10, pady=4)
+        ttk.Label(sf, text='Nguồn nhạc').grid(row=0, column=0, sticky='w')
+        src = self.cfg.get('music_source', 'all'); src = 'all' if src == 'auto' else src
+        self.v_src_lbl = tk.StringVar(value=dict(self.SRC_LABEL).get(src, self.SRC_LABEL[0][1]))
+        cb = ttk.Combobox(sf, textvariable=self.v_src_lbl, values=[b for a, b in self.SRC_LABEL], width=32, state='readonly')
+        cb.grid(row=0, column=1, sticky='w', padx=6)
+        cb.bind('<<ComboboxSelected>>', lambda e: self.music_apply())
+        v_shuf = tk.BooleanVar(value=bool(self.cfg.get('music_shuffle', True)))
+        self.vars['music_shuffle'] = (v_shuf, 'bool', None)
+        ttk.Checkbutton(sf, text='Phát ngẫu nhiên', variable=v_shuf, command=self.music_apply).grid(row=1, column=0, columnspan=2, sticky='w', pady=2)
+        ttk.Label(sf, text='Thư mục nhạc của bạn').grid(row=2, column=0, sticky='w')
+        v_dir = tk.StringVar(value=str(self.cfg.get('music_folder', 'music')))
+        self.vars['music_folder'] = (v_dir, 'str', None)
+        ttk.Entry(sf, textvariable=v_dir, width=26).grid(row=2, column=1, sticky='w', padx=6)
+        def pick_dir():
+            from tkinter import filedialog
+            d = filedialog.askdirectory(title='Chọn thư mục nhạc')
+            if d: v_dir.set(d); self.music_apply()
+        ttk.Button(sf, text='Chọn...', command=pick_dir).grid(row=2, column=2, padx=2)
+
+        lf = ttk.LabelFrame(f, text='Danh sách bài (★ dựng sẵn · ♪ của bạn) — bấm đúp để phát'); lf.pack(fill='both', expand=True, padx=10, pady=6)
+        self.lb_music = tk.Listbox(lf, height=9, bg=BG2, fg=FG, selectbackground=ACC, selectforeground='#1a1206',
+                                   relief='flat', font=('Segoe UI', 10), activestyle='none')
+        self.lb_music.pack(fill='both', expand=True, padx=4, pady=4)
+        self.lb_music.bind('<Double-Button-1>', lambda e: self.music_pick())
+        self.music_keys = []
+        af = ttk.Frame(f); af.pack(fill='x', padx=10, pady=(0, 6))
+        ttk.Button(af, text='▶ Phát bài này (lặp lại)', style='Acc.TButton', command=self.music_pick).pack(side='left', padx=2)
+        ttk.Button(af, text='Phát cả danh sách', command=lambda: self.music_pick(all_=True)).pack(side='left', padx=2)
+        af2 = ttk.Frame(f); af2.pack(fill='x', padx=10, pady=(0, 6))
+        ttk.Button(af2, text='+ Thêm nhạc...', command=self.music_add).pack(side='left', padx=2)
+        ttk.Button(af2, text='Mở thư mục nhạc', command=self.music_open).pack(side='left', padx=2)
+        ttk.Button(af2, text='Làm mới', command=self.music_list).pack(side='left', padx=2)
+        ttk.Label(f, text='Nhạc có bản quyền có thể bị TikTok tắt tiếng; nhạc dựng sẵn (★) là nhạc tự tạo, dùng thoải mái.',
+                  style='S.TLabel', wraplength=460).pack(anchor='w', padx=10, pady=(0, 6))
+        self.music_list()
+        return f
+
+    def music_cfg(self):
+        cfg = self.collect() if hasattr(self, 'v_repo') else dict(self.cfg)
+        lbl = self.v_src_lbl.get()
+        cfg['music_source'] = next((a for a, b in self.SRC_LABEL if b == lbl), 'all')
+        return cfg
+
+    def music_list(self):
+        cfg = self.music_cfg()
+        tracks = M.all_tracks(cfg)
+        self.lb_music.delete(0, 'end'); self.music_keys = []
+        cur = cfg.get('music_track', '')
+        for k, name, p in tracks:
+            self.lb_music.insert('end', ('▶ ' if k == cur else '   ') + name)
+            self.music_keys.append(k)
+        self.l_list_cnt = len(tracks)
+
+    def music_apply(self, **extra):
+        cfg = self.music_cfg(); cfg.update(extra)
+        self.cfg = cfg
+        C.save(cfg)
+        self.ipc.send({'cmd': 'config', 'data': cfg})
+        self.music_list()
+
+    def music_pick(self, all_=False):
+        if all_:
+            self.music_apply(music_track=''); self.log('Nhạc nền: phát cả danh sách'); return
+        sel = self.lb_music.curselection()
+        if not sel: return
+        key = self.music_keys[sel[0]]
+        self.music_apply(music_track=key)
+        self.log('Nhạc nền: lặp bài ' + key.split('/')[-1])
+
+    def music_add(self):
+        from tkinter import filedialog
+        import shutil
+        fs = filedialog.askopenfilenames(title='Chọn file nhạc', filetypes=[('Nhạc', '*.mp3 *.ogg *.wav *.flac *.opus'), ('Tất cả', '*.*')])
+        if not fs: return
+        d = M.user_folder(self.music_cfg()); os.makedirs(d, exist_ok=True)
+        n = 0
+        for src in fs:
+            try: shutil.copy2(src, os.path.join(d, os.path.basename(src))); n += 1
+            except Exception as e: self.log(f'Không chép được {os.path.basename(src)}: {e}')
+        self.log(f'Đã thêm {n} bài vào {d}')
+        self.music_apply()
+        self.ipc.send({'cmd': 'music_reload'})
+
+    def music_open(self):
+        d = M.user_folder(self.music_cfg()); os.makedirs(d, exist_ok=True)
+        try:
+            if sys.platform == 'win32': os.startfile(d)
+            else: subprocess.Popen(['xdg-open', d])
+        except Exception as e:
+            self.log(f'Không mở được thư mục: {e}')
+
     def tab_update(self, nb):
         f = ttk.Frame(nb)
         ttk.Label(f, text='Cập nhật nóng qua GitHub', style='H.TLabel').pack(anchor='w', padx=10, pady=(10, 4))
@@ -277,6 +392,9 @@ class Panel:
         cfg['update_repo'] = self.v_repo.get().strip()
         cfg['update_branch'] = self.v_branch.get().strip() or 'main'
         cfg['auto_update'] = bool(self.v_autoupd.get())
+        if hasattr(self, 'v_src_lbl'):
+            lbl = self.v_src_lbl.get()
+            cfg['music_source'] = next((a for a, b in self.SRC_LABEL if b == lbl), cfg.get('music_source', 'all'))
         return cfg
 
     def apply(self):
@@ -319,6 +437,7 @@ class Panel:
                     self.l_tt.config(text='Trạng thái: ' + str(m.get('tiktok')))
                     for k, l in self.stat_lbl.items():
                         if k in m: l.config(text=str(m[k]))
+                    if 'music' in m: self.l_music.config(text=str(m['music']))
                 elif m.get('type') == 'log':
                     self.log(m.get('msg', ''))
         except queue.Empty:

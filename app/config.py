@@ -20,6 +20,8 @@ def load():
             cfg.update(json.load(f))
     except Exception:
         pass
+    if cfg.get('music_source') == 'auto':
+        cfg['music_source'] = 'all'
     if cfg.get('update_repo') in ('', 'koddrawer/hero-run-live-updates'):
         cfg['update_repo'] = DEFAULTS['update_repo']
     return cfg

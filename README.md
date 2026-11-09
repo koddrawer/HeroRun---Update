@@ -15,7 +15,7 @@ Chạy riêng cửa sổ game: `python launcher.py --game`
 |---|---|
 | Vào xem / bình luận / thả tim | Thành **pet** dễ thương (bay hoặc chạy dưới đất, có avatar + tên). Tối đa 10 pet cùng lúc, mỗi pet ở 60s; hết giờ (hoặc khi đủ 10 mà có người mới) pet bay ra trước mặt Hero và **bị bắn tan** thành hạt pixel |
 | Thả đủ 100 tim | Avatar hiện trong khung, camera zoom 1s rồi bay vào người Hero → Hero được **tiếp sức** (hào quang + tia laser đổi màu) |
-| Tặng quà bất kỳ | Hero **bắn tia sáng lên trời, ghép thành avatar 8-bit** của người tặng + tên + số xu. **Tặng càng nhiều xu, avatar càng to và càng chi tiết** (1 xu ≈ 110px → 1000 xu ≈ 480px) |
+| Tặng quà bất kỳ | Hero **bắn tia sáng lên trời, ghép thành avatar 8-bit** của người tặng + tên + số xu. **Tặng càng nhiều xu, avatar càng to và càng chi tiết** (1 xu ≈ 110px / 24×24 ô → 1000 xu ≈ 480px / 72×72 ô). Tốc độ vẽ chỉnh ở tab *Tương tác* (`art_speed`) |
 
 Hero chỉ chạy tới (không còn quái vật). Chướng ngại vật nhảy/trượt có thể bật lại ở tab *Gameplay*.
 
@@ -26,6 +26,11 @@ Cửa sổ game không thể cao hơn màn hình (màn 1080p → tối đa ~556x
 1. Cài **OBS Studio** (chỉ để có *OBS Virtual Camera*, không cần mở OBS).
 2. Tab *Hiển thị* → tick **Xuất CAMERA ẢO** → *Lưu & áp dụng*.
 3. TikTok LIVE Studio → thêm nguồn **Camera** → chọn **OBS Virtual Camera** (tắt lật gương). Bỏ nguồn Window capture cũ.
+
+## Nhạc nền (tab *Nhạc nền*)
+- 6 bài dựng sẵn (★, nhạc tự tạo, không lo bản quyền) + nhạc của bạn (♪) trong thư mục `music\`.
+- Chọn nguồn (tất cả / dựng sẵn / của bạn / nhạc cũ / tắt), phát ngẫu nhiên, kéo âm lượng trực tiếp.
+- Bấm đúp 1 bài để **lặp lại bài đó**, hoặc *Phát cả danh sách*. Nút ⏮ ⏯ ⏭, *+ Thêm nhạc...* (chép file vào thư mục nhạc), *Mở thư mục nhạc*.
 
 ## Lồng tiếng (VieNeu-TTS)
 - Chạy trên máy (CPU, ONNX) — `run.bat` tự cài `vieneu`. Lần đầu bật game sẽ tải model từ HuggingFace (vài trăm MB), sau đó dùng offline.

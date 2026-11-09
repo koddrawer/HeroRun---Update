@@ -1,11 +1,11 @@
 {
- "version": "1.2.0",
- "notes": "Bỏ quái vật: donate bắn avatar 8-bit lên trời (càng nhiều xu càng to); pet hết giờ bị Hero bắn tan",
+ "version": "1.2.1",
+ "notes": "Tab Nhạc nền (chọn bài, 6 bài dựng sẵn, thêm nhạc); chỉnh tốc độ vẽ avatar; avatar nét gấp đôi",
  "files": [
   {
    "path": "README.md",
-   "sha256": "073f8ad351464eb5cbb9170a8dba478327e96bf9b813c568b6fd6b3d5efc755d",
-   "size": 4198
+   "sha256": "44fbf6cd9819fb13c2487adbdcc0a4f9af926eb6652cf5c136f0104530468d95",
+   "size": 4771
   },
   {
    "path": "build_exe.bat",
@@ -34,8 +34,8 @@
   },
   {
    "path": "version.json",
-   "sha256": "e2c865a7fff2b8e898c272a1d4dad77dd2b31e8c60b875235c7fa89d2c2aa5b9",
-   "size": 153
+   "sha256": "a92cbb52dc0a6c6d2ed7806ec7e8a88b90e9f21512a07b548bb69b912016c301",
+   "size": 156
   },
   {
    "path": "assets/music/track1_adventure.ogg",
@@ -51,6 +51,21 @@
    "path": "assets/music/track3_sky.ogg",
    "sha256": "3add544520ffd30a2d693750914fdbba58284b6afce75a3ed07da54dbaec2d98",
    "size": 912204
+  },
+  {
+   "path": "assets/music/track4_festival.ogg",
+   "sha256": "cf26c0e9715c99a3750d9e6d72040123d923857f3d5804b0fd179bc50790d662",
+   "size": 710413
+  },
+  {
+   "path": "assets/music/track5_night_city.ogg",
+   "sha256": "22e3a33c916324c866a052b167d8dfca9d027980e805159dc8c7e4e120712326",
+   "size": 1003891
+  },
+  {
+   "path": "assets/music/track6_chill_lofi.ogg",
+   "sha256": "0369f40dcad2136fbd4b690e553396b73636111e0d6f569b0c46f400671c5768",
+   "size": 1249360
   },
   {
    "path": "assets/fonts/bold.ttf",
@@ -1349,13 +1364,13 @@
   },
   {
    "path": "app/config.py",
-   "sha256": "6a408715868c2b994ca89ff80e4eca52064ec5c5ba44c60323bf95b091d9a979",
-   "size": 1025
+   "sha256": "f0438d81803227a022656d80e41c0d7bb5d45bb8314cc7d7497b8c7dd08d30d2",
+   "size": 1103
   },
   {
    "path": "app/defaults.py",
-   "sha256": "40f28b17783c4eabc657a12aeb161f96036267a29012720a7cab7657eb8dfa41",
-   "size": 3819
+   "sha256": "890ad2d6cfac10f4e3db56f5bbd27d976741419714a6902941fe5e32953f0c86",
+   "size": 4143
   },
   {
    "path": "app/fx.py",
@@ -1364,8 +1379,8 @@
   },
   {
    "path": "app/game.py",
-   "sha256": "48f94653001e165dd08bba360be1785946fd82f8956e7161d878c0ad401567e0",
-   "size": 61122
+   "sha256": "f6335ddbe0cfdec0ad21e7657f45c0e7b4397ea2d0183420f7016d98dbe712d3",
+   "size": 62066
   },
   {
    "path": "app/ipc.py",
@@ -1374,13 +1389,13 @@
   },
   {
    "path": "app/music.py",
-   "sha256": "fb027d22f8534bcd7b275f3d4f8c0d9e9fbbc43cf2c70329c591f5fc688af030",
-   "size": 3220
+   "sha256": "712cae36119a65266cc0b79a52f52903fc91959fe1bdf912e8c8c23b6287d44d",
+   "size": 4704
   },
   {
    "path": "app/panel.py",
-   "sha256": "ea20ed00f6ed7091930e6ee6762bc5a784683daf78046298f827f586a4630fe2",
-   "size": 23899
+   "sha256": "8f3c329fc1afccac65840d81df2222b9c6822c6445d793ae005ff0d01b7299d4",
+   "size": 30908
   },
   {
    "path": "app/tiktok_client.py",

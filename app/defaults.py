@@ -44,14 +44,17 @@ DEFAULTS = {
     "art_min_px": 110,              # cỡ avatar khi tặng ít (1 xu)
     "art_max_px": 480,              # cỡ avatar tối đa
     "art_coins_max": 1000,          # số xu để đạt cỡ tối đa (tăng theo log)
-    "art_max_grid": 36,             # số ô pixel tối đa mỗi cạnh (avatar to = nhiều chi tiết hơn)
+    "art_grid_min": 24,             # độ phân giải avatar nhỏ nhất (ô pixel mỗi cạnh)
+    "art_grid_max": 72,             # độ phân giải avatar lớn nhất (avatar to = chi tiết hơn)
+    "art_speed": 1.0,               # tốc độ vẽ avatar (x1 = bình thường, 2 = nhanh gấp đôi, 0.5 = chậm)
     "art_show_time": 5,             # giây hiển thị (+ tới 3s cho quà lớn)
     "art_queue_max": 20,
     "zoom_scale": 1.6,
 
     # ---- âm thanh / giao diện ----
     "music_volume": 0.35,
-    "music_source": "auto",         # auto | folder | builtin | classic | off
+    "music_source": "all",          # all | builtin | folder | classic | off
+    "music_track": "",              # "" = phát cả danh sách | key 1 bài (builtin/x.ogg, folder/y.mp3)
     "music_folder": "music",        # thư mục nhạc của bạn (tương đối thư mục app hoặc đường dẫn đầy đủ)
     "music_shuffle": True,
     "sfx_volume": 0.7,

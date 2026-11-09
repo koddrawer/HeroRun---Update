@@ -1,4 +1,4 @@
-# Nhạc nền: phát danh sách bài (thư mục music\ của bạn hoặc nhạc dựng sẵn), tự chuyển bài
+# Nhạc nền: nhạc dựng sẵn + thư mục music\ của bạn; chọn 1 bài cố định hoặc phát cả danh sách
 import os, random
 import pygame
 from .config import ROOT, ASSETS
@@ -16,8 +16,25 @@ def list_dir(d):
         return []
 
 
+def user_folder(cfg):
+    f = (cfg.get('music_folder') or '').strip()
+    if not f: return USER_DIR
+    return f if os.path.isabs(f) else os.path.join(ROOT, f)
+
+
+def all_tracks(cfg):
+    """[(key, tên hiển thị, đường dẫn)] — key: 'builtin/x.ogg' | 'folder/y.mp3' | 'classic'"""
+    out = [('builtin/' + os.path.basename(p), '★ ' + os.path.splitext(os.path.basename(p))[0], p)
+           for p in list_dir(BUILTIN_DIR)]
+    out += [('folder/' + os.path.basename(p), '♪ ' + os.path.splitext(os.path.basename(p))[0], p)
+            for p in list_dir(user_folder(cfg))]
+    out.append(('classic', '★ nhạc cũ của game', CLASSIC))
+    return out
+
+
 class Music:
-    """music_source: auto (thư mục của bạn nếu có bài, không thì nhạc dựng sẵn) | folder | builtin | classic | off"""
+    """music_source: all | builtin | folder | classic | off  (auto = thư mục của bạn nếu có, không thì dựng sẵn)
+       music_track: '' = phát cả danh sách, hoặc key 1 bài (lặp lại bài đó)"""
 
     def __init__(self, game):
         self.g = game
@@ -25,53 +42,60 @@ class Music:
         self.current = ''
         self.sig = None
         self.vol = 0.35
+        self.paused = False
         os.makedirs(USER_DIR, exist_ok=True)
 
-    def folder(self):
-        f = (self.g.cfg.get('music_folder') or '').strip()
-        if not f: return USER_DIR
-        return f if os.path.isabs(f) else os.path.join(ROOT, f)
-
     def build(self):
-        src = self.g.cfg.get('music_source', 'auto')
+        cfg = self.g.cfg
+        src = cfg.get('music_source', 'all')
         if src == 'off': return []
+        tracks = all_tracks(cfg)
+        key = (cfg.get('music_track') or '').strip()
+        if key:
+            for k, _, p in tracks:
+                if k == key and os.path.exists(p): return [p]
         if src == 'classic': return [CLASSIC]
-        user = list_dir(self.folder())
+        builtin = [p for k, _, p in tracks if k.startswith('builtin/')]
+        user = [p for k, _, p in tracks if k.startswith('folder/')]
         if src == 'folder': return user
-        if src == 'builtin': return list_dir(BUILTIN_DIR)
-        return user or list_dir(BUILTIN_DIR) or [CLASSIC]
+        if src == 'builtin': return builtin
+        if src == 'auto': return user or builtin or [CLASSIC]
+        return builtin + user or [CLASSIC]
 
     def refresh(self, force=False):
         cfg = self.g.cfg
-        sig = (cfg.get('music_source'), self.folder(), cfg.get('music_shuffle'))
+        sig = (cfg.get('music_source'), user_folder(cfg), cfg.get('music_shuffle'), cfg.get('music_track'))
         if sig == self.sig and not force: return
         self.sig = sig
         self.playlist = self.build()
-        if cfg.get('music_shuffle', True): random.shuffle(self.playlist)
-        self.idx = -1
+        if cfg.get('music_shuffle', True) and len(self.playlist) > 1: random.shuffle(self.playlist)
+        self.idx = -1; self.paused = False
         try: pygame.mixer.music.stop()
         except Exception: pass
         self.current = ''
         if not self.playlist:
-            self.g.log('Nhạc nền: tắt / thư mục chưa có bài nào')
+            self.g.log('Nhạc nền: tắt / chưa có bài nào')
         else:
             self.g.log(f'Nhạc nền: {len(self.playlist)} bài')
         self.next()
 
-    def next(self):
+    def _play(self, i):
+        p = self.playlist[i]
+        pygame.mixer.music.load(p)
+        pygame.mixer.music.play(-1 if len(self.playlist) == 1 else 0)
+        pygame.mixer.music.set_volume(self.vol)
+        self.idx = i; self.paused = False
+        self.current = os.path.splitext(os.path.basename(p))[0]
+
+    def next(self, step=1):
         if not pygame.mixer.get_init() or not self.playlist: return
-        for _ in range(len(self.playlist)):
-            self.idx = (self.idx + 1) % len(self.playlist)
-            p = self.playlist[self.idx]
+        n = len(self.playlist)
+        for k in range(1, n + 1):
+            i = (self.idx + step * k) % n
             try:
-                pygame.mixer.music.load(p)
-                loop = -1 if len(self.playlist) == 1 else 0
-                pygame.mixer.music.play(loop)
-                pygame.mixer.music.set_volume(self.vol)
-                self.current = os.path.splitext(os.path.basename(p))[0]
-                return
+                self._play(i); return
             except Exception as e:
-                self.g.log(f'Không phát được {os.path.basename(p)}: {e}')
+                self.g.log(f'Không phát được {os.path.basename(self.playlist[i])}: {e}')
         self.current = ''
         if self.playlist != [CLASSIC]:
             self.g.log('Chuyển sang nhạc nền dự phòng (wav)')
@@ -80,9 +104,23 @@ class Music:
         else:
             self.playlist = []
 
+    def prev(self):
+        self.next(-1)
+
+    def toggle_pause(self):
+        if not pygame.mixer.get_init(): return
+        if self.paused:
+            pygame.mixer.music.unpause(); self.paused = False
+        else:
+            pygame.mixer.music.pause(); self.paused = True
+
+    def status(self):
+        if not self.current: return '—'
+        return ('⏸ ' if self.paused else '') + self.current
+
     def update(self, vol):
         self.vol = vol
         if not pygame.mixer.get_init(): return
         self.refresh()
-        if self.playlist and not pygame.mixer.music.get_busy():
+        if self.playlist and not self.paused and not pygame.mixer.music.get_busy():
             self.next()

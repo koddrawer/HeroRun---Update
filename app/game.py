@@ -462,13 +462,16 @@ class SkyArt:
         self.k = clamp(math.log(max(1, coins)) / math.log(cmax), 0, 1)
         k = self.k
         self.px = cfg['art_min_px'] + (cfg['art_max_px'] - cfg['art_min_px']) * k
-        self.n = int(round(12 + (max(12, cfg['art_max_grid']) - 12) * k))
+        gmin = max(6, int(cfg.get('art_grid_min', 24)))
+        gmax = max(gmin, int(cfg.get('art_grid_max', 72)))
+        self.n = int(round(gmin + (gmax - gmin) * k))
         self.cell = self.px / self.n
         self.cx = clamp(W * 0.57, self.px / 2 + 14, W - self.px / 2 - 14)
         lo, hi = 190 + self.px / 2, GROUND_Y - 250 - self.px / 2
         self.cy = (lo + hi) / 2 if lo > hi else clamp(470, lo, hi)
         self.state = 'wait'; self.t = 0
-        self.build = 1.1 + 2.2 * k
+        self.speed = clamp(float(cfg.get('art_speed', 1.0)), 0.1, 10)
+        self.build = (1.1 + 2.2 * k) / self.speed
         self.show = cfg['art_show_time'] + 3 * k
         self.cells = []; self.lit = {}; self.shots = []; self.launched = 0
         self.snd_t = 0; self.surf = None; self.done = False
@@ -492,6 +495,7 @@ class SkyArt:
                 q = lambda v: min(255, int(round(v / 40.0)) * 40 + 15)   # bảng màu 8-bit
                 cells.append((ix, iy, (q(c.r), q(c.g), q(c.b))))
         random.shuffle(cells)
+        self.canvas = pygame.Surface((int(self.px) + 2, int(self.px) + 2), pygame.SRCALPHA)
         cells.sort(key=lambda c: -(c[1] + random.uniform(-2.5, 2.5)))  # vẽ từ dưới lên
         self.cells = cells
         name = V.clean_name(self.user['name'])
@@ -514,6 +518,13 @@ class SkyArt:
             dk = (col[0] * 3 // 4, col[1] * 3 // 4, col[2] * 3 // 4)
             pygame.draw.rect(s, dk, (int(x), int(y), sz, sz), 1)
 
+    def recent(self):
+        """các ô vừa sáng (< 0.12s) để vẽ hiệu ứng loé"""
+        t = self.t
+        old = [k for k, t0 in self.lit.items() if t - t0 >= 0.12]
+        for k in old: del self.lit[k]
+        return list(self.lit.items())
+
     def cell_pos(self, ix, iy):
         x0 = self.cx - self.px / 2; y0 = self.cy - self.px / 2
         return x0 + (ix + 0.5) * self.cell, y0 + (iy + 0.5) * self.cell
@@ -532,13 +543,15 @@ class SkyArt:
             while self.launched < want:
                 ix, iy, col = self.cells[self.launched]
                 tx, ty = self.cell_pos(ix, iy)
-                dur = clamp(math.hypot(tx - sx, ty - sy) / 1500, 0.15, 0.45)
+                dur = clamp(math.hypot(tx - sx, ty - sy) / (1500 * max(0.5, self.speed)), 0.08, 0.6)
                 self.shots.append([sx, sy, tx, ty, self.t, dur, col, self.launched])
                 self.launched += 1
             keep = []
             for sh in self.shots:
                 if self.t - sh[4] >= sh[5]:
                     self.lit[sh[7]] = self.t
+                    ix, iy, col = self.cells[sh[7]]
+                    self._cell(self.canvas, ix, iy, col, 0, 0)
                     if random.random() < 0.06: g.fx.sparkle(sh[2], sh[3], [sh[6], (255, 255, 255)], 2, 6)
                 else:
                     keep.append(sh)
@@ -547,7 +560,7 @@ class SkyArt:
             if self.shots and self.snd_t <= 0:
                 self.snd_t = 0.07; g.a.play('shoot', 0.15)
             if self.launched >= total and not self.shots:
-                self._render()
+                self.surf = self.canvas
                 self.state = 'show'; self.t = 0
                 g.cam.shake = 4 + 6 * self.k
                 g.a.play('revive', 0.7)
@@ -564,10 +577,10 @@ class SkyArt:
                              self.cy + random.uniform(-self.px / 2, self.px / 2), [(255, 255, 255)], 1, 4)
             if self.t >= show:
                 self.state = 'fade'; self.t = 0
-                step = max(1, len(self.cells) // 260)
+                step = max(1, len(self.cells) // 320)
                 for ix, iy, col in self.cells[::step]:
                     x, y = self.cell_pos(ix, iy)
-                    g.fx.burst(x, y, [col], 1, 120, 1.0, max(3, int(self.cell)), 520)
+                    g.fx.burst(x, y, [col], 1, 120, 1.0, max(4, int(self.cell * 1.6)), 520)
                 g.a.play('explode', 0.35)
             return
         if self.state == 'fade':
@@ -590,11 +603,11 @@ class SkyArt:
             bob = math.sin(self.t * 2) * 4 if self.state == 'show' else 0
             s.blit(img, (x0, y0 + bob))
         else:
-            for idx, t0 in self.lit.items():
+            s.blit(self.canvas, (x0, y0))
+            for idx, t0 in self.recent():
                 ix, iy, col = self.cells[idx]
                 age = self.t - t0
-                grow = 2 if age < 0.12 else 0
-                self._cell(s, ix, iy, (255, 255, 255) if age < 0.06 else col, x0, y0, grow)
+                self._cell(s, ix, iy, (255, 255, 255) if age < 0.06 else col, x0, y0, 1 if self.cell < 8 else 2)
             for sx, sy, tx, ty, st, dur, col, idx in self.shots:
                 u = clamp((self.t - st) / dur, 0, 1)
                 x = sx + (tx - sx) * u; y = sy + (ty - sy) * u
@@ -942,6 +955,12 @@ class Game:
             self.reset(); self.log('Đã chơi lại từ đầu')
         elif cmd == 'music_next':
             self.music.next()
+        elif cmd == 'music_prev':
+            self.music.prev()
+        elif cmd == 'music_pause':
+            self.music.toggle_pause()
+        elif cmd == 'music_volume':
+            self.cfg['music_volume'] = clamp(float(msg.get('value', 0.35)), 0, 1)
         elif cmd == 'music_reload':
             self.music.refresh(force=True)
         elif cmd == 'clear_guests':
@@ -1297,7 +1316,7 @@ class Game:
                        'guests': len(self.live_guests()), 'popped': self.stats['popped'], 'dist': int(self.dist),
                        'likes': self.stats['likes'], 'coins': self.stats['coins'], 'gifts': self.stats['gifts'],
                        'buff_q': len(self.buff_q), 'art_q': len(self.art_q) + (1 if self.art_cur else 0),
-                       'voice': self.voice.state, 'music': self.music.current or '—', 'window': '%dx%d' % tuple(self.win_size), 'vcam': self.vcam.state, 'version': C.version()})
+                       'voice': self.voice.state, 'music': self.music.status(), 'window': '%dx%d' % tuple(self.win_size), 'vcam': self.vcam.state, 'version': C.version()})
 
     def keys(self, e):
         k = e.key
